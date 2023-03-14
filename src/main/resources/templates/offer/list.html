@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<head th:replace="fragments/head"></head>
+<body>
+<nav th:replace="fragments/nav"></nav>
+<div class="container">
+  <h1>Lista Ofertas</h1>
+  <div th:each="offer : ${offersList}">
+    <p>
+      <span th:text="${offer.title}"></span>
+      <span th:text="${offer.details}"></span>
+      <span th:text="${offer.amount}"></span>
+      <a th:href="${'/offer/delete/' + offer.id}">delete</a>
+    </p>
+  </div>
+  <div th:if="${#lists.isEmpty(offersList)}">
+    No hay ofertas
+  </div>
+</div>
+<footer th:replace="fragments/footer"></footer>
+</body>
+</html>
