@@ -90,8 +90,10 @@ public class UsersService {
      */
     public User getUserByEmail(String email) {
         User user = usersRepository.findByEmail(email);
-        httpSession.setAttribute("money",user.getMoney());
-        httpSession.setAttribute("email", user.getEmail());
+        if (user != null){
+            httpSession.setAttribute("money",user.getMoney());
+            httpSession.setAttribute("email", user.getEmail());
+        }
         return user;
     }
 }
