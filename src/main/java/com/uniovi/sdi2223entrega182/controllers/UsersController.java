@@ -75,7 +75,9 @@ public class UsersController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String email = auth.getName();
         User activeUser = usersService.getUserByEmail(email);
+        double dinero = usersService.getUserByEmail(email).getMoney();
         model.addAttribute("email2", activeUser.getEmail());
+        model.addAttribute("money", dinero);
         return "home";
     }
 }

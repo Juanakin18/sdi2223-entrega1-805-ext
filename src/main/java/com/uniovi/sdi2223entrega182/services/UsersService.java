@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 @Service
@@ -15,6 +16,9 @@ public class UsersService {
     public static int USER = 1;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    private HttpSession httpSession;
 
     @Autowired
     private UsersRepository usersRepository;
@@ -85,6 +89,9 @@ public class UsersService {
      * @return el usuario buscado
      */
     public User getUserByEmail(String email) {
-        return usersRepository.findByEmail(email);
+        User user = usersRepository.findByEmail(email);
+        httpSession.setAttribute("money",user.getMoney());
+        httpSession.setAttribute("email", user.getEmail());
+        return user;
     }
 }
