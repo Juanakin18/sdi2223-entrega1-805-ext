@@ -22,6 +22,8 @@ public class Offer {
     private String details;
     private Date offerDate;
     private double amount;
+    private boolean available;
+    private String description;
 
     public Offer(){    }
 
@@ -31,6 +33,7 @@ public class Offer {
         this.details = details;
         this.offerDate = offerDate;
         this.amount = amount;
+        this.available = true;
     }
 
     public String getTitle() {
@@ -71,5 +74,21 @@ public class Offer {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String descripcion) {
+        this.description = descripcion;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 }
