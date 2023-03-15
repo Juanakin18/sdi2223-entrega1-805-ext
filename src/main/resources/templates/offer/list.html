@@ -10,7 +10,7 @@
       <span th:text="${offer.title}"></span>
       <span th:text="${offer.details}"></span>
       <span th:text="${offer.amount}"></span>
-      <a th:href="${'/offer/delete/' + offer.id}">delete</a>
+      <a th:href="${'/offer/delete/' + offer.id}">Eliminar</a>
     </p>
   </div>
   <div th:if="${#lists.isEmpty(offersList)}">
