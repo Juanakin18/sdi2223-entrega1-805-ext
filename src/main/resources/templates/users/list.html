@@ -16,7 +16,7 @@
             /*<![CDATA[*/
             $( "#deleteAll").click(function() {
                 $.get( "admin/userList/remove", function( data ) {
-                    let urlUpdate = '/users/list/update';
+                    let urlUpdate = 'admin/userList/list/update';
                     $("#tableUsers").load(urlUpdate);
                 });
             });

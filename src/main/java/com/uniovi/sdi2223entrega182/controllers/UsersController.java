@@ -138,7 +138,7 @@ public class UsersController {
         model.addAttribute("usersList", usersService.getAllUsers());
         return "users/list";
     }
-    @RequestMapping("/users/list/update")
+    @RequestMapping("admin/userList/list/update")
     public String updateList(Model model){
         model.addAttribute("usersList", usersService.getAllUsers());
         return "fragments/tableUsers";
