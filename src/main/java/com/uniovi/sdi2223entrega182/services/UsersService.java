@@ -10,6 +10,8 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class UsersService {
     public static double INITIAL_MONEY = 100d;
@@ -95,5 +97,45 @@ public class UsersService {
             httpSession.setAttribute("email", user.getEmail());
         }
         return user;
+    }
+    /**
+     * Método que devuelve todos los usuarios registrados
+     * @return La lista de todos los usuarios registrados
+     */
+    public List<User> getAllUsers() {
+        return usersRepository.findAll();
+    }
+
+
+    /**
+     * Método que selecciona o deselecciona un usuario
+     * @param id Id del usuario
+     * @param select Si se selecciona o no
+     */
+    public void selectUser(long id, boolean select) {
+        Optional<User> user = usersRepository.findById(id);
+        if(user.isPresent()){
+            User user1 = user.get();
+            user1.select(select);
+            usersRepository.save(user1);
+        }
+    }
+
+    /**
+     * Método que devuelve todos los usuarios seleccionados
+     * @return La lista de todos los usuarios
+     */
+    public List<User> getAllSelectedUsers(){
+        return usersRepository.findAllSelectedUsers();
+    }
+
+    /**
+     * Método que borra todos los usuarios seleccionados
+     */
+    public void removeUsers(){
+        List<User> users = usersRepository.findAllSelectedUsers();
+        for(User user : users){
+            usersRepository.delete(user);
+        }
     }
 }
