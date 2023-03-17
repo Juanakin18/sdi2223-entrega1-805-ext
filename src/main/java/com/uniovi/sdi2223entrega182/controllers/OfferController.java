@@ -51,6 +51,10 @@ public class OfferController {
         if (result.hasErrors()) {
             return "offer/add";
         }
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String email = auth.getName();
+        User activeUser = usersService.getUserByEmail(email);
+        offer.setUser(activeUser);
         offersService.addOffer(offer);
         return "redirect:/offer/list";
     }
