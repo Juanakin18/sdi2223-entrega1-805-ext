@@ -1,6 +1,8 @@
 package com.uniovi.sdi2223entrega182.services;
 import com.uniovi.sdi2223entrega182.entities.Offer;
 import com.uniovi.sdi2223entrega182.repositories.OffersRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +19,8 @@ public class OffersService {
     @Autowired
     private OffersRepository offersRepository;
 
+    private static final Logger logger = LoggerFactory.getLogger(SecurityService.class);
+
     public List<Offer> getOffers() {
         List<Offer> offers = new ArrayList<Offer>();
         offersRepository.findAll().forEach(offers::add);
@@ -28,9 +32,11 @@ public class OffersService {
     public void addOffer(Offer offer) {
         // Si en Id es null le asignamos el ultimo + 1 de la lista
         offersRepository.save(offer);
+        logger.info(String.format("Offer %s added", offer.getTitle()));
     }
     public void deleteOffer(Long id) {
         offersRepository.deleteById(id);
+        logger.info(String.format("Offer %s deleted" + "offer id: "+ id));
     }
 
     public Page<Offer> searchOffersByTitle(Pageable pageable, String searchText) {

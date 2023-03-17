@@ -41,6 +41,7 @@ public class UsersService {
     public void addUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         usersRepository.save(user);
+        logger.info(String.format("User %s added", user.getEmail()));
     }
 
     /**
@@ -50,6 +51,7 @@ public class UsersService {
      */
     public void updateUser(User user) {
         usersRepository.save(user);
+        logger.info(String.format("User %s update", user.getEmail()));
     }
 
     /**
@@ -60,6 +62,7 @@ public class UsersService {
     public void deleteUser(String email) {
         User user = usersRepository.findByEmail(email);
         usersRepository.deleteById(user.getId());
+        logger.info(String.format("User %s delete", user.getEmail()));
     }
 
     // ------------------ consultas --------------------
