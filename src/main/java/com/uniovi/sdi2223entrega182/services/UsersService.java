@@ -1,5 +1,6 @@
 package com.uniovi.sdi2223entrega182.services;
 
+import com.uniovi.sdi2223entrega182.entities.Log;
 import com.uniovi.sdi2223entrega182.entities.User;
 import com.uniovi.sdi2223entrega182.repositories.UsersRepository;
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 @Service
 public class UsersService {
@@ -24,7 +26,6 @@ public class UsersService {
 
     @Autowired
     private UsersRepository usersRepository;
-    private static final Logger logger = LoggerFactory.getLogger(SecurityService.class);
     @PostConstruct
     public void init() {
     }
@@ -41,7 +42,6 @@ public class UsersService {
     public void addUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         usersRepository.save(user);
-        logger.info(String.format("User %s added", user.getEmail()));
     }
 
     /**
@@ -51,7 +51,6 @@ public class UsersService {
      */
     public void updateUser(User user) {
         usersRepository.save(user);
-        logger.info(String.format("User %s update", user.getEmail()));
     }
 
     /**
@@ -62,7 +61,7 @@ public class UsersService {
     public void deleteUser(String email) {
         User user = usersRepository.findByEmail(email);
         usersRepository.deleteById(user.getId());
-        logger.info(String.format("User %s delete", user.getEmail()));
+
     }
 
     // ------------------ consultas --------------------
@@ -99,6 +98,7 @@ public class UsersService {
         if (user != null){
             httpSession.setAttribute("money",user.getMoney());
             httpSession.setAttribute("email", user.getEmail());
+            httpSession.setAttribute("euros", "€");
         }
         return user;
     }
