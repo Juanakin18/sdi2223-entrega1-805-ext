@@ -99,4 +99,10 @@ public class UsersService {
         }
         return user;
     }
+
+    public List<User> getUsers() {
+        List<User> users = new ArrayList<User>();
+        usersRepository.findAll().forEach(users::add);
+        return users;
+    }
 }
