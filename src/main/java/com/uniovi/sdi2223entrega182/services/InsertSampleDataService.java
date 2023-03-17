@@ -22,23 +22,23 @@ public class InsertSampleDataService {
     public void init() {
         // Creo los usuarios
 
-        User user1 = new User("pedro@uniovi.es", "Pedro", "Sanchez");
+        User user1 = new User("mariobalotelli@uniovi.es", "Mario", "Balotelli");
         user1.setPassword("123456");
         user1.setRole(rolesService.getRoles()[1]);
         user1.setMoney(100d);
-        User user2 = new User("casado@uniovi.es", "Pablo", "Casado");
+        User user2 = new User("leomessi@uniovi.es", "Leo", "Messi");
         user2.setPassword("123456");
         user2.setRole(rolesService.getRoles()[1]);
         user2.setMoney(100d);
-        User user3 = new User("iglesias@uniovi.es", "Pablo", "Iglesias");
+        User user3 = new User("cristianoronaldo@uniovi.es", "Cristiano", "Ronaldo");
         user3.setPassword("123456");
         user3.setRole(rolesService.getRoles()[1]);
         user3.setMoney(100d);
-        User user4 = new User("rivera@uniovi.es", "Albert", "Rivera");
+        User user4 = new User("upamencano@uniovi.es", "Albert", "Upamencano");
         user4.setPassword("123456");
         user4.setRole(rolesService.getRoles()[1]);
         user4.setMoney(100d);
-        User user5 = new User("garzon@uniovi.es", "Alberto", "Garzon");
+        User user5 = new User("djuka@uniovi.es", "Uros", "Djurdjevic");
         user5.setPassword("123456");
         user5.setRole(rolesService.getRoles()[1]);
         user5.setMoney(10d);
