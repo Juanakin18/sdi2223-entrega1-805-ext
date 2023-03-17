@@ -44,6 +44,7 @@ public class Offer {
         this.offerDate = offerDate;
         this.amount = amount;
         this.user = user;
+        this.available = true;
     }
 
     public String getTitle() {
