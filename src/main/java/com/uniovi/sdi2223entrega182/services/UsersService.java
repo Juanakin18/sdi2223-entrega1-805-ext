@@ -2,6 +2,8 @@ package com.uniovi.sdi2223entrega182.services;
 
 import com.uniovi.sdi2223entrega182.entities.User;
 import com.uniovi.sdi2223entrega182.repositories.UsersRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,7 @@ public class UsersService {
 
     @Autowired
     private UsersRepository usersRepository;
+    private static final Logger logger = LoggerFactory.getLogger(SecurityService.class);
     @PostConstruct
     public void init() {
     }
