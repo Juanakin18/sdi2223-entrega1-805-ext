@@ -1,9 +1,13 @@
 package com.uniovi.sdi2223entrega182.controllers;
 
 import com.uniovi.sdi2223entrega182.entities.Offer;
+import com.uniovi.sdi2223entrega182.entities.User;
 import com.uniovi.sdi2223entrega182.services.OffersService;
+import com.uniovi.sdi2223entrega182.services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,19 +23,25 @@ public class OfferController {
 
     @Autowired
     private OffersService offersService;
+    @Autowired
+    private UsersService usersService;
 
     @Autowired
     private AddOfferValidator addOfferValidator;
 
     @RequestMapping("/offer/list")
     public String getList(Model model){
-        model.addAttribute("offersList", offersService.getOffers());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String email = auth.getName();
+        User activeUser = usersService.getUserByEmail(email);
+        model.addAttribute("offersList", activeUser.getOffers());
         return "/offer/list";
     }
 
     @RequestMapping(value = "/offer/add")
     public String getOffer(Model model) {
         model.addAttribute("offer", new Offer());
+        model.addAttribute("usersList", usersService.getUsers());
         return "offer/add";
     }
 
@@ -47,7 +57,11 @@ public class OfferController {
 
     @RequestMapping("/offer/delete/{id}")
     public String deleteOffer(@PathVariable Long id){
-        offersService.deleteOffer(id);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String email = auth.getName();
+        User activeUser = usersService.getUserByEmail(email);
+        if (offersService.getOffer(id).getUser().getId() == activeUser.getId())
+            offersService.deleteOffer(id);
         return "redirect:/offer/list";
     }
 

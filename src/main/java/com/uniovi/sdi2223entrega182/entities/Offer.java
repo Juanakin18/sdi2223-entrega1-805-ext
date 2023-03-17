@@ -2,9 +2,7 @@ package com.uniovi.sdi2223entrega182.entities;
 
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 
@@ -24,6 +22,9 @@ public class Offer {
     private double amount;
     private boolean available;
     private String description;
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user;
 
     public Offer(){    }
 
@@ -34,6 +35,15 @@ public class Offer {
         this.offerDate = offerDate;
         this.amount = amount;
         this.available = true;
+    }
+
+    public Offer(String title, String details, Date offerDate, double amount, User user){
+        super();
+        this.title = title;
+        this.details = details;
+        this.offerDate = offerDate;
+        this.amount = amount;
+        this.user = user;
     }
 
     public String getTitle() {
@@ -90,5 +100,27 @@ public class Offer {
 
     public void setAvailable(boolean available) {
         this.available = available;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Offer{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", details='" + details + '\'' +
+                ", offerDate=" + offerDate +
+                ", amount=" + amount +
+                ", available=" + available +
+                ", description='" + description + '\'' +
+                ", user=" + user +
+                '}';
     }
 }
