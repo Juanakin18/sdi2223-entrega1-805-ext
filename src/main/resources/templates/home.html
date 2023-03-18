@@ -12,7 +12,7 @@
         </div>
         <button type="submit" class="btn btn-primary">Buscar</button>
     </form>
-    <div class="table-responsive" th:fragment="tableOffers" id="tableProfessors">
+    <div class="table-responsive" th:fragment="tableOffers" id="tableOffers">
         <table class="table table-hover">
             <thead>
             <tr>
@@ -32,28 +32,30 @@
                 <td scope="row" th:text="${offer.description}">Descripcion</td>
                 <td scope="row" th:text="${offer.details}">Detalles</td>
                 <td scope="row" th:text="${offer.amount}">Detalles</td>
+
                 <td>
-                    <div th:if="${offer.available}">
-                        <button>
-                            <span th:text="#{ofertas.buy}"></span>
+                    <div th:if="${offer.available}" >
+                        <button  class="btn btn-primary" >
+                           <a  th:href="${'/home/buy/' + offer.id}"><span th:text="#{ofertas.buy}"></span></a>
                         </button>
                     </div>
                     <div th:unless="${offer.available}">
                         <span th:text="#{ofertas.sold}"></span>
                     </div>
                 </td>
+
                 <td>
 
                     <button  class="btn btn-primary">
                         iniciar conversación
                     </button>
 
-
                 </td>
             </tr>
             </tbody>
         </table>
     </div>
+    <footer th:replace="fragments/pagination"/>
 </div>
 <footer th:replace="fragments/footer"></footer>
 </body>

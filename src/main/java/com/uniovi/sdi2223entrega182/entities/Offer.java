@@ -2,9 +2,7 @@ package com.uniovi.sdi2223entrega182.entities;
 
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 
@@ -25,6 +23,13 @@ public class Offer {
     private boolean available;
     private String description;
 
+    @ManyToOne
+    @JoinColumn(name="buyer_id")
+    private User buyer;
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user;
+
     public Offer(){    }
 
     public Offer(Long id, String title, String details, Date offerDate, double amount) {
@@ -33,6 +38,16 @@ public class Offer {
         this.details = details;
         this.offerDate = offerDate;
         this.amount = amount;
+        this.available = true;
+    }
+
+    public Offer(String title, String details, Date offerDate, double amount, User user){
+        super();
+        this.title = title;
+        this.details = details;
+        this.offerDate = offerDate;
+        this.amount = amount;
+        this.user = user;
         this.available = true;
     }
 
@@ -88,7 +103,32 @@ public class Offer {
         return available;
     }
 
-    public void setAvailable(boolean available) {
-        this.available = available;
+    public void setAvailable() {
+        this.available = true;
+    }
+    public void setNotAvailable() {
+        this.available = false;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Offer{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", details='" + details + '\'' +
+                ", offerDate=" + offerDate +
+                ", amount=" + amount +
+                ", available=" + available +
+                ", description='" + description + '\'' +
+                ", user=" + user +
+                '}';
     }
 }
