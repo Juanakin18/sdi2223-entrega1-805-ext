@@ -1,11 +1,15 @@
 package com.uniovi.sdi2223entrega182;
 
-import com.uniovi.sdi2223entrega182.pageobjects.PO_HomeView;
-import com.uniovi.sdi2223entrega182.pageobjects.PO_Properties;
+import com.uniovi.sdi2223entrega182.pageobjects.*;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 class Sdi2223Entrega182ApplicationTests {
@@ -39,9 +43,151 @@ class Sdi2223Entrega182ApplicationTests {
         //Cerramos el navegador al finalizar las pruebas
         driver.quit();
     }
+
+    /**
+     *  Registro de Usuario con datos válidos.
+     */
     @Test
     @Order(1)
-    void PR01A() {
-        PO_HomeView.checkWelcomeToPage(driver, PO_Properties.getSPANISH());
+    void PR1() {
+        //Vamos al formulario de registro
+        PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
+        //Rellenamos el formulario.
+        PO_SignUpView.fillForm(driver, "pepe@email.com", "Josefo", "Perez", "77777", "77777");
+        //Comprobamos que entramos en la sección privada y nos nuestra el texto a buscar
+        String checkText = "Ofertas";
+        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
     }
+    /**
+     *  Registro de Usuario con datos inválidos.
+     */
+    @Test
+    @Order(2)
+    void PR2() {
+        PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
+        PO_SignUpView.fillForm(driver, "alonso", "alonso", "Perez", "77777", "77777");
+        List<WebElement> result = PO_SignUpView.checkElementByKey(driver, "Error.signup.email.valid",
+                PO_Properties.getSPANISH() );
+        //Comprobamos el error de email no valido
+        String checkText = PO_HomeView.getP().getString("Error.signup.email.valid",
+                PO_Properties.getSPANISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
+    }
+    /**
+     *   Registro de Usuario con datos inválidos (repetición de contraseña inválida).
+     */
+    @Test
+    @Order(3)
+    void PR3() {
+        PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
+        PO_SignUpView.fillForm(driver, "alonso@email.com", "alonso", "Perez", "1111", "77777");
+        List<WebElement> result = PO_SignUpView.checkElementByKey(driver, "Error.signup.passwordConfirm.coincidence",
+                PO_Properties.getSPANISH() );
+        //Comprobamos el error de contraseña mal repetida
+        String checkText = PO_HomeView.getP().getString("Error.signup.passwordConfirm.coincidence",
+                PO_Properties.getSPANISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
+    }
+    /**
+     *  Registro de Usuario con datos inválidos (email existente).
+     */
+    @Test
+    @Order(4)
+    void PR4() {
+        PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
+        PO_SignUpView.fillForm(driver, "mariobalotelli@uniovi.es", "alonso", "Perez", "1111", "1111");
+        List<WebElement> result = PO_SignUpView.checkElementByKey(driver, "Error.signup.email.duplicate",
+                PO_Properties.getSPANISH() );
+        //Comprobamos el error de email repetido
+        String checkText = PO_HomeView.getP().getString("Error.signup.email.duplicate",
+                PO_Properties.getSPANISH());
+        Assertions.assertEquals(checkText , result.get(0).getText());
+    }
+    /**
+     *  Inicio de sesión con datos validos(admin)
+     */
+    @Test
+    @Order(5)
+    void PR5() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "admin@email.com", "admin");
+        String checkText = "Ofertas";
+        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
+    }
+    /**
+     *  Inicio de sesión con datos validos(usuario)
+     */
+    @Test
+    @Order(6)
+    void PR6() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "mariobalotelli@uniovi.es", "123456");
+        String checkText = "Lista Ofertas";
+        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
+    }
+    /**
+     *  Inicio de sesión con datos invalidos(usuario)
+     */
+    @Test
+    @Order(7)
+    void PR7() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "", "");
+        String checkText = "Identifícate";
+        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
+    }
+    /**
+     *  Inicio de sesión con datos invalidos(contraseña)
+     */
+    @Test
+    @Order(8)
+    void PR8() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "mariobalotelli@uniovi.es", "12s36");
+        String checkText = "Credenciales erróneas o campos vacíos";
+        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
+    }
+    /**
+     *  Inicio de sesión con datos invalidos(contraseña)
+     */
+    @Test
+    @Order(9)
+    void PR9() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "mariobalotelli@uniovi.es", "123456");
+        PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+        String checkText = "Identifícate";
+        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
+    }
+    /**
+     *  Inicio de sesión con datos invalidos(contraseña)
+     */
+    @Test
+    @Order(10)
+    void PR10() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "mariobalotelli@uniovi.es", "12s36");
+        String checkText = "Credenciales erróneas o campos vacíos";
+        assertThrows(Exception.class, () -> {PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");});
+
+    }
+    /**
+     *  Acceder sin estar autenticado a la opcion listado de usuarios
+     */
+    @Test
+    @Order(30)
+    void PR30() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "mariobalotelli@uniovi.es", "12s36");
+        String checkText = "Credenciales erróneas o campos vacíos";
+        assertThrows(Exception.class, () -> {PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");});
+
+    }
+
 }

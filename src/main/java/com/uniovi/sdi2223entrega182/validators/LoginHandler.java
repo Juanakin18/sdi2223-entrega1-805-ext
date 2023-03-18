@@ -36,7 +36,7 @@ public class LoginHandler  extends SimpleUrlAuthenticationSuccessHandler {
         if(email.equals("admin@email.com")){
             super.setDefaultTargetUrl("/home");//user/list
         }else{
-            super.setDefaultTargetUrl("/home");//user/list
+            super.setDefaultTargetUrl("/offer/list");
         }
         super.onAuthenticationSuccess(request, response, authentication);
     }
