@@ -6,14 +6,14 @@
 <head th:replace="fragments/head">
 <body>
 <nav th:replace="fragments/nav"/>
-<h2>Usuarios</h2>
+<h2 th:text="#{usersList.users}"></h2>
 <div id = "tableUsers">
     <table id="table" class="table table-hover" >
         <thead>
         <tr>
-            <th scope="col">Email</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Apellidos</th>
+            <th scope="col" th:text="#{usersList.email}"></th>
+            <th scope="col" th:text="#{usersList.name}"></th>
+            <th scope="col" th:text="#{usersList.surname}"></th>
         </tr>
         </thead>
         <tbody>
@@ -22,7 +22,8 @@
             <td th:text="${user.name}"></td>
             <td th:text="${user.lastName}"></td>
             <td>
-                <input th:if="${user.id!=activeUser.id}" type="checkbox" th:id="${'Seleccionado' + user.id}" name="seleccionado" th:value ="${user.email}"   >
+                <input th:if="${user.id!=activeUser.id}" type="checkbox" th:id="${'Seleccionado' + user.id}"
+                       name="seleccionado" th:value ="${user.email}"   th:text="#{usersList.select}">
                 <script th:inline="javascript">
                     /*<![CDATA[*/
                     $( "#Seleccionado"+[[${user.id}]]).click(function() {
@@ -45,7 +46,7 @@
     <form method="post" action="/admin/userList/remove">
         <button type="submit" th:id="deleteAll"
                 class="btn btn-success"
-               >Borrar Todo
+                th:text="#{usersList.delete}">
         </button>
     </form>
 </div>

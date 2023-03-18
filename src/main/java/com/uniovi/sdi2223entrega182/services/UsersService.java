@@ -129,6 +129,7 @@ public class UsersService {
                 usersRepository.delete(user);
             }
         }
+        lista.clear();
     }
     public void addEmailToDelete(String email){
         if(!lista.contains(email))
