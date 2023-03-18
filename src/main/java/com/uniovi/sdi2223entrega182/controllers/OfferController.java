@@ -78,4 +78,13 @@ public class OfferController {
         return "redirect:/offer/list";
     }
 
+    @RequestMapping("/offer/bought")
+    public String getListBought(Model model){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String email = auth.getName();
+        User activeUser = usersService.getUserByEmail(email);
+        model.addAttribute("offersList", activeUser.getOffersBought());
+        return "/offer/bought";
+    }
+
 }

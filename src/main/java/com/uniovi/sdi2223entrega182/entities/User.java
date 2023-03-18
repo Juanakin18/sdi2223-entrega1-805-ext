@@ -1,6 +1,7 @@
 package com.uniovi.sdi2223entrega182.entities;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -117,8 +118,9 @@ public class User {
     public Set<Offer> getOffersBought() {
         return offersBought;
     }
-    public void addOffersBought(Offer offer) {
-        this.offersBought.add(offer);
+
+    public void setOffersBought(Set<Offer> offersBought) {
+        this.offersBought = offersBought;
     }
 }
 

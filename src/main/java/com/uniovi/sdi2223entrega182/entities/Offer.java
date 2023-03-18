@@ -118,6 +118,14 @@ public class Offer {
         this.user = user;
     }
 
+    public User getBuyer() {
+        return buyer;
+    }
+
+    public void setBuyer(User buyer) {
+        this.buyer = buyer;
+    }
+
     @Override
     public String toString() {
         return "Offer{" +
