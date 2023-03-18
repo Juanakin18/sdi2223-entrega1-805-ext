@@ -1,6 +1,7 @@
 package com.uniovi.sdi2223entrega182;
 
 import com.uniovi.sdi2223entrega182.pageobjects.*;
+import com.uniovi.sdi2223entrega182.util.SeleniumUtils;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -178,6 +179,75 @@ class Sdi2223Entrega182ApplicationTests {
 
     }
     /**
+     * Mostrar el listado de usuarios y comprobar que se muestran todos los que existen en el
+     * sistema.
+     */
+    @Test
+    @Order(11)
+    void PR11(){
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "admin@uniovi.es", "admin");
+        PO_NavView.clickOption(driver,"listaUsuarios","class", "nav-link");
+        String checkText = "Usuarios";
+        PO_View.checkElementBy(driver,"text",checkText);
+        //Contamos el número de filas de usuarios
+        List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
+                PO_View.getTimeout());
+        Assertions.assertEquals(6,userList.size() );
+    }
+
+    /**
+     * Ir a la lista de usuarios, borrar el primer usuario de la lista, comprobar que la lista se actualiza
+     * y dicho usuario desaparece.
+     */
+    @Test
+    @Order(12)
+    void PR12(){
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "admin@uniovi.es", "admin");
+        PO_NavView.clickOption(driver,"listaUsuarios","class", "nav-link");
+        String checkText = "Usuarios";
+        PO_View.checkElementBy(driver,"text",checkText);
+        //Contamos el número de filas de usuarios
+        List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
+                PO_View.getTimeout());
+        Assertions.assertEquals(6,userList.size() );
+    }
+    /**
+     * Ir a la lista de usuarios, borrar el último usuario de la lista, comprobar que la lista se actualiza
+     * y dicho usuario desaparece.
+     */
+    @Test
+    @Order(13)
+    void PR13(){
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "admin@uniovi.es", "admin");
+        PO_NavView.clickOption(driver,"listaUsuarios","class", "nav-link");
+        String checkText = "Usuarios";
+        PO_View.checkElementBy(driver,"text",checkText);
+        //Contamos el número de filas de usuarios
+        List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
+                PO_View.getTimeout());
+        Assertions.assertEquals(6,userList.size() );
+    }
+    /**
+     *  Ir a la lista de usuarios, borrar 3 usuarios, comprobar que la lista se actualiza y dichos
+     * usuarios desaparecen.
+     */
+    @Test
+    @Order(14)
+    void PR14(){
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "admin@uniovi.es", "admin");
+        PO_NavView.clickOption(driver,"listaUsuarios","class", "nav-link");
+        String checkText = "Usuarios";
+        PO_View.checkElementBy(driver,"text",checkText);
+        //Contamos el número de filas de usuarios
+        List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
+                PO_View.getTimeout());
+        Assertions.assertEquals(6,userList.size() );
+    }
+    /**
      *  Acceder sin estar autenticado a la opcion listado de usuarios
      */
     @Test
@@ -189,5 +259,6 @@ class Sdi2223Entrega182ApplicationTests {
         assertThrows(Exception.class, () -> {PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");});
 
     }
+
 
 }
