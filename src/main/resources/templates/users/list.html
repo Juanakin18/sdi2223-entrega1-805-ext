@@ -28,6 +28,9 @@
                         if($(this).prop('checked')){
                             $.get("/admin/usersList/add/"+[[${user.email}]]);
                             console.log([[${user.email}]]);
+                        }else{
+                            $.get("/admin/usersList/removeFromList/"+[[${user.email}]]);
+                            console.log([[${user.email}]]);
                         }
                     });
                     /*]]>*/

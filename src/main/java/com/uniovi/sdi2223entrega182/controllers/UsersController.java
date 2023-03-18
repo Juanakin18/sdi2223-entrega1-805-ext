@@ -125,6 +125,12 @@ public class UsersController {
         model.addAttribute("usersToDelete",lista);
         return "/users/list";
     }
+    @RequestMapping(value = "/admin/usersList/removeFromList/{s}", method = RequestMethod.GET)
+    public String removeSelected(Model model, @PathVariable String s){
+        this.lista.remove(s);
+        model.addAttribute("usersToDelete",lista);
+        return "/users/list";
+    }
     @RequestMapping(value = "admin/usersList/remove/{id}")
     public String remove(Model model, @PathVariable String id){
         usersService.deleteUser(id);
