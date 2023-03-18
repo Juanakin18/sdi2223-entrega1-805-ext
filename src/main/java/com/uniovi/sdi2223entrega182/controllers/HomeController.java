@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
+import java.util.Set;
 
 @Controller
 public class HomeController {
@@ -77,7 +78,10 @@ public class HomeController {
         }
 
         activeUser.setMoney(activeUser.getMoney() - offer.getAmount());
-        activeUser.addOffersBought(offer);
+        offer.setBuyer(activeUser);
+        Set<Offer> offerSet = activeUser.getOffersBought();
+        offerSet.add(offer);
+        activeUser.setOffersBought(offerSet);
         offer.setNotAvailable();
 
         usersService.addUser(activeUser);
