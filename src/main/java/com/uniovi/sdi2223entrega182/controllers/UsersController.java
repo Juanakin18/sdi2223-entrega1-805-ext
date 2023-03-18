@@ -12,9 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +28,8 @@ public class UsersController {
     private UsersService usersService;
     @Autowired
     private RolesService rolesService;
+
+    private List<String> lista = new ArrayList<>();
     /**
      * Método que permite registrar un usuario en el sistema.
      *
@@ -89,58 +89,48 @@ public class UsersController {
      * @param model El modelo
      * @return La vista de la lista
      */
-    @RequestMapping(value ="admin/userList")
+    @RequestMapping(value ="/admin/userList")
     public String getList(Model model){
 
         List<User> users = new ArrayList<User>();
         users = usersService.getAllUsers();
-        model.addAttribute("userList", users);
+        model.addAttribute("usersList", users);
+        model.addAttribute("usersToDelete", new ArrayList<String>());
         return "users/list";
     }
 
-    /**
-     * Método que selecciona un usuario
-     * @param model El modelo
-     * @param id El id
-     * @return La vista de la lista
-     */
-    @RequestMapping(value = "admin/userList/select/{id}", method = RequestMethod.GET)
-    public String getSelect(Model model, @PathVariable int id ){
-
-        usersService.selectUser(id, true);
-        model.addAttribute("usersList", usersService.getAllUsers());
-        return "users/list";
-    }
-
-    /**
-     * Método que deselecciona un usuario
-     * @param model El modelo
-     * @param id El id
-     * @return La vista de la lista
-     */
-    @RequestMapping(value = "admin/userList/deselect/{id}", method = RequestMethod.GET)
-    public String getDeselect(Model model, @PathVariable int id ){
-
-        usersService.selectUser(id, false);
-        model.addAttribute("usersList", usersService.getAllUsers());
-        return "users/list";
-    }
 
     /**
      * Método que borre todos los usuarios seleccionados
      * @param model El modelo
      * @return La vista de la lista
      */
-    @RequestMapping(value = "admin/userList/remove", method = RequestMethod.GET)
-    public String getDelete(Model model ){
-        usersService.removeUsers();
+    @RequestMapping(value = "/admin/userList/remove", method = RequestMethod.POST)
+    public String delete(Model model){
+
+        usersService.removeUsers(lista);
+        lista.clear();
         List<User> users = usersService.getAllUsers();
         model.addAttribute("usersList", usersService.getAllUsers());
-        return "users/list";
+        return "redirect:/admin/userList";
     }
     @RequestMapping("admin/userList/list/update")
     public String updateList(Model model){
         model.addAttribute("usersList", usersService.getAllUsers());
         return "fragments/tableUsers";
     }
+    @RequestMapping(value = "/admin/usersList/add/{s}", method = RequestMethod.GET)
+    public String addSelected(Model model, @PathVariable String s){
+        this.lista.add(s);
+        model.addAttribute("usersToDelete",lista);
+        return "/users/list";
+    }
+    @RequestMapping(value = "admin/usersList/remove/{id}")
+    public String remove(Model model, @PathVariable String id){
+        usersService.deleteUser(id);
+        model.addAttribute("usersList", usersService.getAllUsers());
+        return "redirect:/admin/userList";
+
+    }
+
 }

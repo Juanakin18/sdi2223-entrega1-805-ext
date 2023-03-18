@@ -19,7 +19,6 @@ public class User {
 
     private double money;
 
-    private boolean isSelected;
     private String role;
     public User(String email, String name, String lastName) {
         super();
@@ -100,12 +99,5 @@ public class User {
     }
 
 
-    /**
-     * Selecciona o deselecciona el usuario
-     * @param select Si se deselecciona o no
-     */
-    public void select(boolean select) {
-        this.isSelected = select;
-    }
 }
 

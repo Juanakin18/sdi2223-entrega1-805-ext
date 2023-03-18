@@ -107,35 +107,19 @@ public class UsersService {
     }
 
 
-    /**
-     * Método que selecciona o deselecciona un usuario
-     * @param id Id del usuario
-     * @param select Si se selecciona o no
-     */
-    public void selectUser(long id, boolean select) {
-        Optional<User> user = usersRepository.findById(id);
-        if(user.isPresent()){
-            User user1 = user.get();
-            user1.select(select);
-            usersRepository.save(user1);
-        }
-    }
 
-    /**
-     * Método que devuelve todos los usuarios seleccionados
-     * @return La lista de todos los usuarios
-     */
-    public List<User> getAllSelectedUsers(){
-        return usersRepository.findAllSelectedUsers();
-    }
+
 
     /**
      * Método que borra todos los usuarios seleccionados
      */
-    public void removeUsers(){
-        List<User> users = usersRepository.findAllSelectedUsers();
+    public void removeUsers(List<String> emails){
+
+        List<User> users = usersRepository.findAll();
         for(User user : users){
-            usersRepository.delete(user);
+            if(emails.contains(user.getEmail())){
+                usersRepository.delete(user);
+            }
         }
     }
 }
