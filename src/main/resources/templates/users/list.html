@@ -42,19 +42,11 @@
     </table>
 </div>
 <div id="formulario">
-    <form>
-        <button type="button" th:id="deleteAll"
-                class="btn btn-success">Borrar Todo
+    <form method="post" action="/admin/userList/remove">
+        <button type="submit" th:id="deleteAll"
+                class="btn btn-success"
+               >Borrar Todo
         </button>
-        <script th:inline="javascript">
-            /*<![CDATA[*/
-            $( "#deleteAll").click(function() {
-
-                $.post("/admin/userList/remove/");
-
-            });
-            /*]]>*/
-        </script>
     </form>
 </div>
 <footer th:replace="fragments/footer"/>

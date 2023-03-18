@@ -3,6 +3,7 @@ package com.uniovi.sdi2223entrega182;
 import com.uniovi.sdi2223entrega182.pageobjects.*;
 import com.uniovi.sdi2223entrega182.util.SeleniumUtils;
 import org.junit.jupiter.api.*;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -212,6 +213,12 @@ class Sdi2223Entrega182ApplicationTests {
         List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
                 PO_View.getTimeout());
         Assertions.assertEquals(6,userList.size() );
+        By enlace = By.xpath("//*[@id=\"Seleccionado1\"]");
+        driver.findElement(enlace).click();
+        By enlaceBorrar = By.xpath("//*[@id=\"deleteAll\"]");
+        driver.findElement(enlaceBorrar).click();
+        Assertions.assertNull(driver.findElement(enlace));
+
     }
     /**
      * Ir a la lista de usuarios, borrar el último usuario de la lista, comprobar que la lista se actualiza
@@ -229,6 +236,11 @@ class Sdi2223Entrega182ApplicationTests {
         List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
                 PO_View.getTimeout());
         Assertions.assertEquals(6,userList.size() );
+        By enlace = By.xpath("//*[@id=\"Seleccionado22\"]");
+        driver.findElement(enlace).click();
+        By enlaceBorrar = By.xpath("//*[@id=\"deleteAll\"]");
+        driver.findElement(enlaceBorrar).click();
+        Assertions.assertNull(driver.findElement(enlace));
     }
     /**
      *  Ir a la lista de usuarios, borrar 3 usuarios, comprobar que la lista se actualiza y dichos
@@ -246,6 +258,17 @@ class Sdi2223Entrega182ApplicationTests {
         List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
                 PO_View.getTimeout());
         Assertions.assertEquals(6,userList.size() );
+        By enlace1 = By.xpath("//*[@id=\"Seleccionado66\"]");
+        driver.findElement(enlace1).click();
+        By enlace2 = By.xpath("//*[@id=\"Seleccionado16\"]");
+        driver.findElement(enlace1).click();
+        By enlace3 = By.xpath("//*[@id=\"Seleccionado21\"]");
+        driver.findElement(enlace1).click();
+        By enlaceBorrar = By.xpath("//*[@id=\"deleteAll\"]");
+        driver.findElement(enlaceBorrar).click();
+        Assertions.assertNull(driver.findElement(enlace1));
+        Assertions.assertNull(driver.findElement(enlace2));
+        Assertions.assertNull(driver.findElement(enlace3));
     }
     /**
      *  Acceder sin estar autenticado a la opcion listado de usuarios

@@ -105,7 +105,7 @@ public class UsersController {
      * @param model El modelo
      * @return La vista de la lista
      */
-    @RequestMapping(value = "/admin/userList/remove", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/userList/remove")
     public String delete(Model model){
 
         usersService.removeUsers(lista);

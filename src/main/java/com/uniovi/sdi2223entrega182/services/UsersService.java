@@ -122,4 +122,8 @@ public class UsersService {
             }
         }
     }
+
+    public Object getUsers() {
+        return null;
+    }
 }
