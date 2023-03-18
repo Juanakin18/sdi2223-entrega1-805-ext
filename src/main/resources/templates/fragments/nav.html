@@ -12,8 +12,9 @@
             <li>
                 <a class="nav-link" sec:authorize="hasRole('ROLE_ADMIN')">LOGGEADO COMO ADMINISTRADOR<span class="sr-only">(current)</span></a>
             </li>
-            <li><span sec:authorize="isAuthenticated()" th:text="${session.email}"class="navbar-text"></span></li>
-            <li id ="money" sec:authorize="hasRole('ROLE_USER')"><span th:text="${session.money}" class="navbar-text"> euros</span></li>
+            <li><span sec:authorize="isAuthenticated()" th:text="${session.email}"class="navbar-text"></span>&ensp;</li>
+            <li id ="money" sec:authorize="hasRole('ROLE_USER')"><span th:text="${session.money}" class="navbar-text"></span></li>
+            <li id ="euros" sec:authorize="hasRole('ROLE_USER')"><span th:text="${session.euros}" class="navbar-text"></span></li>
             <li class="nav-item dropdown active" sec:authorize="hasRole('ROLE_USER')" >
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false"> Gestión de Ofertas
@@ -27,6 +28,11 @@
         <ul class="navbar-nav text-align-center">
             <li class="nav-item ">
                 <a class="nav-link" href="/home">MyWallapop<span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+        <ul class="navbar-nav text-align-center">
+            <li class="nav-item ">
+                <a class="nav-link" sec:authorize="hasRole('ROLE_ADMIN')" href="/log">Logs<span class="sr-only">(current)</span></a>
             </li>
         </ul>
         <ul class="navbar-nav justify-content-end">

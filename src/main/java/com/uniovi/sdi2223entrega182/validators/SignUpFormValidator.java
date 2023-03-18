@@ -28,6 +28,9 @@ public class SignUpFormValidator implements Validator {
         if (usersService.getUserByEmail(user.getEmail()) != null) {
             errors.rejectValue("email", "Error.signup.email.duplicate");
         }
+        if (!user.getEmail().contains("@")) {
+            errors.rejectValue("email", "Error.signup.email.valid");
+        }
         if (!user.getPasswordConfirm().equals(user.getPassword())) {
             errors.rejectValue("passwordConfirm", "Error.signup.passwordConfirm.coincidence");
         }
