@@ -94,6 +94,10 @@ public class UsersController {
 
         List<User> users = new ArrayList<User>();
         users = usersService.getAllUsers();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String email = auth.getName();
+        User activeUser = usersService.getUserByEmail(email);
+        model.addAttribute("activeUser",activeUser);
         model.addAttribute("usersList", users);
         model.addAttribute("usersToDelete", new ArrayList<String>());
         return "users/list";

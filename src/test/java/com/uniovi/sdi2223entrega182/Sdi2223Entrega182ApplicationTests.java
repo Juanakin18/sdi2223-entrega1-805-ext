@@ -18,9 +18,12 @@ class Sdi2223Entrega182ApplicationTests {
 
     static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
     //static String Geckodriver = "C:\\Path\\geckodriver-v0.30.0-win64.exe";
-    static String Geckodriver = "D:\\SDI\\Clase 5\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+    static String Geckodriver = "C:\\Users\\juani\\OneDrive\\Escritorio\\PL-SDI-Sesio╠ün5-material\\geckodriver-v0.30.0-win64.exe";
+    //static String PathFirefox = "/Applications/Firefox.app/Contents/MacOS/firefox-bin";
+    //static String Geckodriver = "/Users/USUARIO/selenium/geckodriver-v0.30.0-macos";
+    //Común a Windows y a MACOSX
     static WebDriver driver = getDriver(PathFirefox, Geckodriver);
-    static String URL = "http://localhost:8090";
+    static String URL = "http://localhost:8090/home";
     public static WebDriver getDriver(String PathFirefox, String Geckodriver) {
         System.setProperty("webdriver.firefox.bin", PathFirefox);
         System.setProperty("webdriver.gecko.driver", Geckodriver);
@@ -187,14 +190,15 @@ class Sdi2223Entrega182ApplicationTests {
     @Order(11)
     void PR11(){
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "admin@uniovi.es", "admin");
-        PO_NavView.clickOption(driver,"listaUsuarios","class", "nav-link");
+        PO_LoginView.fillLoginForm(driver, "admin@email.com", "admin");
+        By enlace = By.xpath("//*[@id=\"listaUsuarios\"]");
+        driver.findElement(enlace).click();
         String checkText = "Usuarios";
         PO_View.checkElementBy(driver,"text",checkText);
         //Contamos el número de filas de usuarios
         List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
                 PO_View.getTimeout());
-        Assertions.assertEquals(6,userList.size() );
+        Assertions.assertEquals(7,userList.size() );
     }
 
     /**
@@ -205,19 +209,23 @@ class Sdi2223Entrega182ApplicationTests {
     @Order(12)
     void PR12(){
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "admin@uniovi.es", "admin");
-        PO_NavView.clickOption(driver,"listaUsuarios","class", "nav-link");
+        PO_LoginView.fillLoginForm(driver, "admin@email.com", "admin");
+        By enlace2 = By.xpath("//*[@id=\"listaUsuarios\"]");
+        driver.findElement(enlace2).click();
         String checkText = "Usuarios";
         PO_View.checkElementBy(driver,"text",checkText);
         //Contamos el número de filas de usuarios
         List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
                 PO_View.getTimeout());
-        Assertions.assertEquals(6,userList.size() );
-        By enlace = By.xpath("//*[@id=\"Seleccionado1\"]");
+        Assertions.assertEquals(7,userList.size() );
+        By enlace = By.xpath("/html/body/div[1]/table/tbody/tr[1]/td[4]/input");
         driver.findElement(enlace).click();
+
         By enlaceBorrar = By.xpath("//*[@id=\"deleteAll\"]");
         driver.findElement(enlaceBorrar).click();
-        Assertions.assertNull(driver.findElement(enlace));
+        userList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
+                PO_View.getTimeout());
+        Assertions.assertEquals(6,userList.size() );
 
     }
     /**
@@ -228,19 +236,22 @@ class Sdi2223Entrega182ApplicationTests {
     @Order(13)
     void PR13(){
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "admin@uniovi.es", "admin");
-        PO_NavView.clickOption(driver,"listaUsuarios","class", "nav-link");
+        PO_LoginView.fillLoginForm(driver, "admin@email.com", "admin");
+        By enlace3 = By.xpath("//*[@id=\"listaUsuarios\"]");
+        driver.findElement(enlace3).click();
         String checkText = "Usuarios";
         PO_View.checkElementBy(driver,"text",checkText);
         //Contamos el número de filas de usuarios
         List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
                 PO_View.getTimeout());
         Assertions.assertEquals(6,userList.size() );
-        By enlace = By.xpath("//*[@id=\"Seleccionado22\"]");
+        By enlace = By.xpath("/html/body/div[1]/table/tbody/tr[6]/td[4]/input");
         driver.findElement(enlace).click();
         By enlaceBorrar = By.xpath("//*[@id=\"deleteAll\"]");
         driver.findElement(enlaceBorrar).click();
-        Assertions.assertNull(driver.findElement(enlace));
+        userList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
+                PO_View.getTimeout());
+        Assertions.assertEquals(5,userList.size() );
     }
     /**
      *  Ir a la lista de usuarios, borrar 3 usuarios, comprobar que la lista se actualiza y dichos
@@ -250,25 +261,26 @@ class Sdi2223Entrega182ApplicationTests {
     @Order(14)
     void PR14(){
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "admin@uniovi.es", "admin");
-        PO_NavView.clickOption(driver,"listaUsuarios","class", "nav-link");
+        PO_LoginView.fillLoginForm(driver, "admin@email.com", "admin");
+        By enlace = By.xpath("//*[@id=\"listaUsuarios\"]");
+        driver.findElement(enlace).click();
         String checkText = "Usuarios";
         PO_View.checkElementBy(driver,"text",checkText);
         //Contamos el número de filas de usuarios
         List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
                 PO_View.getTimeout());
-        Assertions.assertEquals(6,userList.size() );
-        By enlace1 = By.xpath("//*[@id=\"Seleccionado66\"]");
+        Assertions.assertEquals(5,userList.size() );
+        By enlace1 = By.xpath("/html/body/div[1]/table/tbody/tr[1]/td[4]/input");
         driver.findElement(enlace1).click();
-        By enlace2 = By.xpath("//*[@id=\"Seleccionado16\"]");
-        driver.findElement(enlace1).click();
-        By enlace3 = By.xpath("//*[@id=\"Seleccionado21\"]");
-        driver.findElement(enlace1).click();
+        By enlace2 = By.xpath("/html/body/div[1]/table/tbody/tr[2]/td[4]/input");
+        driver.findElement(enlace2).click();
+        By enlace3 = By.xpath("/html/body/div[1]/table/tbody/tr[3]/td[4]/input");
+        driver.findElement(enlace3).click();
         By enlaceBorrar = By.xpath("//*[@id=\"deleteAll\"]");
         driver.findElement(enlaceBorrar).click();
-        Assertions.assertNull(driver.findElement(enlace1));
-        Assertions.assertNull(driver.findElement(enlace2));
-        Assertions.assertNull(driver.findElement(enlace3));
+        userList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
+                PO_View.getTimeout());
+        Assertions.assertEquals(2,userList.size() );
     }
     /**
      *  Acceder sin estar autenticado a la opcion listado de usuarios

@@ -22,7 +22,7 @@
             <td th:text="${user.name}"></td>
             <td th:text="${user.lastName}"></td>
             <td>
-                <input type="checkbox" th:id="${'Seleccionado' + user.id}" name="seleccionado" th:value ="${user.email}"   >
+                <input th:if="${user.id!=activeUser.id}" type="checkbox" th:id="${'Seleccionado' + user.id}" name="seleccionado" th:value ="${user.email}"   >
                 <script th:inline="javascript">
                     /*<![CDATA[*/
                     $( "#Seleccionado"+[[${user.id}]]).click(function() {
