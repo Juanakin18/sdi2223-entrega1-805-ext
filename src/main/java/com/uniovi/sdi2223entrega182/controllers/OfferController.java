@@ -12,11 +12,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import com.uniovi.sdi2223entrega182.validators.AddOfferValidator;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Controller
 public class OfferController {
@@ -46,10 +49,23 @@ public class OfferController {
     }
 
     @RequestMapping(value = "/offer/add", method = RequestMethod.POST)
-    public String setOffer(@Validated Offer offer, BindingResult result) {
+    public String setOffer(@Validated Offer offer, @RequestParam("file") MultipartFile image, BindingResult result) {
         addOfferValidator.validate(offer, result);
         if (result.hasErrors()) {
             return "offer/add";
+        }
+        if (!image.isEmpty()){
+            Path directorioImagenes = Paths.get("src//main//resources//static/images");
+            String absolutePath = directorioImagenes.toFile().getAbsolutePath();
+
+            try {
+                byte[] bytesImg = image.getBytes();
+                Path completePath = Paths.get(absolutePath + "//" + image.getOriginalFilename());
+                Files.write(completePath, bytesImg);
+                offer.setImage(image.getOriginalFilename());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String email = auth.getName();

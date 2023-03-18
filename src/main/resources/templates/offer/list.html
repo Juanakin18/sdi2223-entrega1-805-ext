@@ -7,6 +7,8 @@
   <h1>Lista Ofertas</h1>
   <div th:each="offer : ${offersList}">
     <p>
+      <img class="img-thumbnail rounded float-left" th:src="@{'/images/' + ${offer.image}}"
+           th:alt="${offer.image}" />
       <span th:text="${offer.title}"></span>
       <span th:text="${offer.details}"></span>
       <span th:text="${offer.amount}"></span>
