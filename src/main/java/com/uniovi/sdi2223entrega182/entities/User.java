@@ -21,6 +21,10 @@ public class User {
     private double money;
 
     private String role;
+
+    @OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL)
+    private Set<Offer> offersBought;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Offer> offers;
 
@@ -110,5 +114,11 @@ public class User {
         this.offers = offers;
     }
 
+    public Set<Offer> getOffersBought() {
+        return offersBought;
+    }
+    public void addOffersBought(Offer offer) {
+        this.offersBought.add(offer);
+    }
 }
 

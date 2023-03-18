@@ -22,6 +22,10 @@ public class Offer {
     private double amount;
     private boolean available;
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name="buyer_id")
+    private User buyer;
     @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
@@ -99,8 +103,11 @@ public class Offer {
         return available;
     }
 
-    public void setAvailable(boolean available) {
-        this.available = available;
+    public void setAvailable() {
+        this.available = true;
+    }
+    public void setNotAvailable() {
+        this.available = false;
     }
 
     public User getUser() {

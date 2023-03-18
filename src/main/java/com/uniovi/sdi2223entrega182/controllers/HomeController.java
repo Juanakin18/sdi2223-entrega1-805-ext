@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
@@ -52,22 +53,39 @@ public class HomeController {
     @RequestMapping("/home")
     public String home(Model model, Pageable pageable, @RequestParam(value = "", required = false)String searchText) {
         Page<Offer> offers = this.getPageOffers(pageable, searchText);
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String email = auth.getName();
-        User activeUser = usersService.getUserByEmail(email);
-        double dinero = usersService.getUserByEmail(email).getMoney();
+        User activeUser = getUser();
 
         model.addAttribute("offerList", offers.getContent());
         model.addAttribute("page", offers);
         model.addAttribute("email2", activeUser.getEmail());
-        model.addAttribute("money", dinero);
+        model.addAttribute("money", activeUser.getMoney());
 
         logger.info(String.format("Acceso a HOME HOME"));
         Log log = new Log("PET","HOME CONTROLLER HOME", new Date());
         logService.addLog(log);
+
         return "home";
     }
+
+    @RequestMapping(value = {"/home/buy/{id}"}, method = RequestMethod.GET)
+    public String homeBuy(Model model, @PathVariable Long id) {
+        User activeUser = getUser();
+        Offer offer = offersService.getOffer(id);
+
+        if(activeUser.getMoney()< offer.getAmount() || !offer.isAvailable() || activeUser.getOffers().contains(offer)){
+            return "redirect:/home";
+        }
+
+        activeUser.setMoney(activeUser.getMoney() - offer.getAmount());
+        activeUser.addOffersBought(offer);
+        offer.setNotAvailable();
+
+        usersService.addUser(activeUser);
+        offersService.addOffer(offer);
+
+        return "redirect:/home";
+    }
+
     @RequestMapping("/log")
     public String log(Model model){
         model.addAttribute("logslist", logService.getLogs());
@@ -93,5 +111,12 @@ public class HomeController {
             offers = offersService.getOffers(pageable);
         }
         return offers;
+    }
+
+    private User getUser(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String email = auth.getName();
+        User activeUser = usersService.getUserByEmail(email);
+        return activeUser;
     }
 }

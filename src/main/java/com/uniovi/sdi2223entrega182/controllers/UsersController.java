@@ -1,10 +1,14 @@
 package com.uniovi.sdi2223entrega182.controllers;
 
+import com.uniovi.sdi2223entrega182.entities.Log;
 import com.uniovi.sdi2223entrega182.entities.User;
+import com.uniovi.sdi2223entrega182.services.LogService;
 import com.uniovi.sdi2223entrega182.services.RolesService;
 import com.uniovi.sdi2223entrega182.services.SecurityService;
 import com.uniovi.sdi2223entrega182.services.UsersService;
 import com.uniovi.sdi2223entrega182.validators.SignUpFormValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -85,17 +89,5 @@ public class UsersController {
         logService.addLog(log);
         return "login";
     }
-    @RequestMapping(value = {"/home"}, method = RequestMethod.GET)
-    public String home(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String email = auth.getName();
-        User activeUser = usersService.getUserByEmail(email);
-        double dinero = usersService.getUserByEmail(email).getMoney();
-        model.addAttribute("email2", activeUser.getEmail());
-        model.addAttribute("money", dinero);
-        logger.info(String.format("Acceso a home"));
-        Log log = new Log("PET","USER CONTROLLER HOME", new Date());
-        logService.addLog(log);
-        return "home";
-    }
+
 }
