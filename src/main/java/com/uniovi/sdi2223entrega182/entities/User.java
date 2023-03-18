@@ -1,6 +1,7 @@
 package com.uniovi.sdi2223entrega182.entities;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -20,6 +21,9 @@ public class User {
     private double money;
 
     private String role;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Offer> offers;
+
     public User(String email, String name, String lastName) {
         super();
         this.email = email;
@@ -97,5 +101,14 @@ public class User {
     public void setMoney(double money) {
         this.money = money;
     }
+
+    public Set<Offer> getOffers() {
+        return offers;
+    }
+
+    public void setOffers(Set<Offer> offers) {
+        this.offers = offers;
+    }
+
 }
 
