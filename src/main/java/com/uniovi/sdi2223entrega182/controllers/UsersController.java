@@ -1,14 +1,12 @@
 package com.uniovi.sdi2223entrega182.controllers;
 
-import com.uniovi.sdi2223entrega182.entities.Log;
+import com.uniovi.sdi2223entrega182.entities.Offer;
 import com.uniovi.sdi2223entrega182.entities.User;
-import com.uniovi.sdi2223entrega182.services.LogService;
+import com.uniovi.sdi2223entrega182.services.OffersService;
 import com.uniovi.sdi2223entrega182.services.RolesService;
 import com.uniovi.sdi2223entrega182.services.SecurityService;
 import com.uniovi.sdi2223entrega182.services.UsersService;
 import com.uniovi.sdi2223entrega182.validators.SignUpFormValidator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,11 +14,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class UsersController {
@@ -32,11 +29,10 @@ public class UsersController {
     @Autowired
     private UsersService usersService;
     @Autowired
-    private LogService logService;
-    @Autowired
     private RolesService rolesService;
 
-    private static final Logger logger = LoggerFactory.getLogger(SecurityService.class);
+
+
     /**
      * Método que permite registrar un usuario en el sistema.
      *
@@ -57,8 +53,6 @@ public class UsersController {
         usersService.addUser(user);
 
         securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());
-        Log log = new Log("ALTA","USER CONTROLLER SIGNUP", new Date());
-        logService.addLog(log);
         return "redirect:home";
     }
     /**
@@ -70,9 +64,6 @@ public class UsersController {
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
     public String signup(Model model) {
         model.addAttribute("user", new User());
-        logger.info(String.format("Acceso a SIGNUP"));
-        Log log = new Log("PET","USER CONTROLLER SIGNUP", new Date());
-        logService.addLog(log);
         return "signup";
     }
 
@@ -84,10 +75,72 @@ public class UsersController {
      */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login() {
-        logger.info(String.format("Acceso a LOGIN"));
-        Log log = new Log("PET","USER CONTROLLER LOGIN", new Date());
-        logService.addLog(log);
         return "login";
+    }
+    @RequestMapping(value = {"/home"}, method = RequestMethod.GET)
+    public String home(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String email = auth.getName();
+        User activeUser = usersService.getUserByEmail(email);
+        double dinero = usersService.getUserByEmail(email).getMoney();
+        model.addAttribute("email2", activeUser.getEmail());
+        model.addAttribute("money", dinero);
+        return "home";
+    }
+    /**
+     * Método que devuelve la lista de usuarios
+     * @param model El modelo
+     * @return La vista de la lista
+     */
+    @RequestMapping(value ="/admin/userList")
+    public String getList(Model model){
+
+        List<User> users = new ArrayList<User>();
+        users = usersService.getAllUsers();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String email = auth.getName();
+        User activeUser = usersService.getUserByEmail(email);
+        model.addAttribute("activeUser",activeUser);
+        model.addAttribute("usersList", users);
+        model.addAttribute("usersToDelete", new ArrayList<String>());
+        return "users/list";
+    }
+
+
+    /**
+     * Método que borre todos los usuarios seleccionados
+     * @param model El modelo
+     * @return La vista de la lista
+     */
+    @RequestMapping(value = "/admin/userList/remove")
+    public String delete(Model model){
+
+        usersService.removeUsers();
+        List<User> users = usersService.getAllUsers();
+        model.addAttribute("usersList", usersService.getAllUsers());
+        return "redirect:/admin/userList";
+    }
+    @RequestMapping("admin/userList/list/update")
+    public String updateList(Model model){
+        model.addAttribute("usersList", usersService.getAllUsers());
+        return "fragments/tableUsers";
+    }
+    @RequestMapping(value = "/admin/usersList/add/{s}", method = RequestMethod.GET)
+    public String addSelected(Model model, @PathVariable String s){
+        usersService.addEmailToDelete(s);
+        return "/users/list";
+    }
+    @RequestMapping(value = "/admin/usersList/removeFromList/{s}", method = RequestMethod.GET)
+    public String removeSelected(Model model, @PathVariable String s){
+        usersService.deleteEmailToDelete(s);
+        return "/users/list";
+    }
+    @RequestMapping(value = "admin/usersList/remove/{id}")
+    public String remove(Model model, @PathVariable String id){
+        usersService.deleteUser(id);
+        model.addAttribute("usersList", usersService.getAllUsers());
+        return "redirect:/admin/userList";
+
     }
 
 }

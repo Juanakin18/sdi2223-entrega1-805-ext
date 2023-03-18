@@ -10,7 +10,7 @@
                 <a class="nav-link" href="/home">Home<span class="sr-only">(current)</span></a>
             </li>
             <li>
-                <a class="nav-link" sec:authorize="hasRole('ROLE_ADMIN')">LOGGEADO COMO ADMINISTRADOR<span class="sr-only">(current)</span></a>
+                <a id="listaUsuarios" class="nav-link" href="/admin/userList" sec:authorize="hasRole('ROLE_ADMIN')" th:text="#{admin.userList}">LOGGEADO COMO ADMINISTRADOR<span class="sr-only">(current)</span></a>
             </li>
             <li><span sec:authorize="isAuthenticated()" th:text="${session.email}"class="navbar-text"></span>&ensp;</li>
             <li id ="money" sec:authorize="hasRole('ROLE_USER')"><span th:text="${session.money}" class="navbar-text"></span></li>
