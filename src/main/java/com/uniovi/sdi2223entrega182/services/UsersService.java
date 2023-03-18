@@ -16,6 +16,7 @@ import java.util.Optional;
 public class UsersService {
     public static double INITIAL_MONEY = 100d;
     public static int USER = 1;
+    private List<String> lista = new ArrayList<>();
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -113,14 +114,22 @@ public class UsersService {
     /**
      * Método que borra todos los usuarios seleccionados
      */
-    public void removeUsers(List<String> emails){
+    public void removeUsers(){
 
         List<User> users = usersRepository.findAll();
         for(User user : users){
-            if(emails.contains(user.getEmail())){
+            if(lista.contains(user.getEmail())){
                 usersRepository.delete(user);
             }
         }
+    }
+    public void addEmailToDelete(String email){
+        if(!lista.contains(email))
+            lista.add(email);
+    }
+    public void deleteEmailToDelete(String email){
+        if(lista.contains(email))
+            lista.remove(email);
     }
 
     public Object getUsers() {

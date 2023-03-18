@@ -222,10 +222,12 @@ class Sdi2223Entrega182ApplicationTests {
         driver.findElement(enlace).click();
 
         By enlaceBorrar = By.xpath("//*[@id=\"deleteAll\"]");
+        //td[contains(text(), 'Nota A2')]/following-sibling::*[2]
         driver.findElement(enlaceBorrar).click();
         userList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
                 PO_View.getTimeout());
         Assertions.assertEquals(6,userList.size() );
+
 
     }
     /**

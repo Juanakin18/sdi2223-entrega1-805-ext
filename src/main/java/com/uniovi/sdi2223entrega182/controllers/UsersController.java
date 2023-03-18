@@ -29,7 +29,7 @@ public class UsersController {
     @Autowired
     private RolesService rolesService;
 
-    private List<String> lista = new ArrayList<>();
+
     /**
      * Método que permite registrar un usuario en el sistema.
      *
@@ -112,8 +112,7 @@ public class UsersController {
     @RequestMapping(value = "/admin/userList/remove")
     public String delete(Model model){
 
-        usersService.removeUsers(lista);
-        lista.clear();
+        usersService.removeUsers();
         List<User> users = usersService.getAllUsers();
         model.addAttribute("usersList", usersService.getAllUsers());
         return "redirect:/admin/userList";
@@ -125,14 +124,12 @@ public class UsersController {
     }
     @RequestMapping(value = "/admin/usersList/add/{s}", method = RequestMethod.GET)
     public String addSelected(Model model, @PathVariable String s){
-        this.lista.add(s);
-        model.addAttribute("usersToDelete",lista);
+        usersService.addEmailToDelete(s);
         return "/users/list";
     }
     @RequestMapping(value = "/admin/usersList/removeFromList/{s}", method = RequestMethod.GET)
     public String removeSelected(Model model, @PathVariable String s){
-        this.lista.remove(s);
-        model.addAttribute("usersToDelete",lista);
+        usersService.deleteEmailToDelete(s);
         return "/users/list";
     }
     @RequestMapping(value = "admin/usersList/remove/{id}")
