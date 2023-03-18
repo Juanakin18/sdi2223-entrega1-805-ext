@@ -1,6 +1,8 @@
 package com.uniovi.sdi2223entrega182.controllers;
 
+import com.uniovi.sdi2223entrega182.entities.Offer;
 import com.uniovi.sdi2223entrega182.entities.User;
+import com.uniovi.sdi2223entrega182.services.OffersService;
 import com.uniovi.sdi2223entrega182.services.RolesService;
 import com.uniovi.sdi2223entrega182.services.SecurityService;
 import com.uniovi.sdi2223entrega182.services.UsersService;
@@ -28,6 +30,7 @@ public class UsersController {
     private UsersService usersService;
     @Autowired
     private RolesService rolesService;
+
 
 
     /**
