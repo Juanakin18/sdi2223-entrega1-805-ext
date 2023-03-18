@@ -3,11 +3,34 @@
 <head th:replace="fragments/head"></head>
 <body>
 <nav th:replace="fragments/nav"></nav>
-<div class="container">
-    <h1>Lista Conversaciones</h1>
-    <div>
-        No hay conversaciones
-    </div>
+<div class="table-responsive" th:fragment="tableOffers" id="tableOffers">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col"><span th:text="#{offerts.title}"></span></th>
+            <th scope="col"><span th:text="#{offerts.description}"></span></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="conversation : ${conversations}">
+            <td scope="row" th:text="${conversation.getOffer().getUser().getEmail()}"></td>
+            <td scope="row" th:text="${conversation.getOffer().getTitle()}"></td>
+            <td>
+
+                <a th:href="${'/conversation/chat/' + conversation.getOffer.id+'/'+conversation.id}"
+                >  conversación</a>
+                <a th:href="${'/conversation/delete/'+conversation.id}"
+                >  borrar</a>
+
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 <footer th:replace="fragments/footer"></footer>
 </body>
