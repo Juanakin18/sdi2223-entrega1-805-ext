@@ -1,6 +1,7 @@
 package com.uniovi.sdi2223entrega182.entities;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -21,6 +22,10 @@ public class User {
     private double money;
 
     private String role;
+
+    @OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL)
+    private Set<Offer> offersBought;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Offer> offers;
 
@@ -110,5 +115,12 @@ public class User {
         this.offers = offers;
     }
 
+    public Set<Offer> getOffersBought() {
+        return offersBought;
+    }
+
+    public void setOffersBought(Set<Offer> offersBought) {
+        this.offersBought = offersBought;
+    }
 }
 

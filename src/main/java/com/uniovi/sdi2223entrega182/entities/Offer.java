@@ -22,6 +22,10 @@ public class Offer {
     private double amount;
     private boolean available;
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name="buyer_id")
+    private User buyer;
     private String image;
     @ManyToOne
     @JoinColumn(name="user_id")
@@ -46,6 +50,7 @@ public class Offer {
         this.amount = amount;
         this.user = user;
         this.image = "default-image.png";
+        this.available = true;
     }
 
     public String getTitle() {
@@ -110,6 +115,14 @@ public class Offer {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public User getBuyer() {
+        return buyer;
+    }
+
+    public void setBuyer(User buyer) {
+        this.buyer = buyer;
     }
 
     public String getImage() {
