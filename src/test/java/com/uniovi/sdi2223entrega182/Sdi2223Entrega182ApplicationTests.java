@@ -55,7 +55,7 @@ class Sdi2223Entrega182ApplicationTests {
         //Rellenamos el formulario.
         PO_SignUpView.fillForm(driver, "pepe@email.com", "Josefo", "Perez", "77777", "77777");
         //Comprobamos que entramos en la sección privada y nos nuestra el texto a buscar
-        String checkText = "Ofertas";
+        String checkText = "Gestión de Ofertas";
         List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
         Assertions.assertEquals(checkText, result.get(0).getText());
     }

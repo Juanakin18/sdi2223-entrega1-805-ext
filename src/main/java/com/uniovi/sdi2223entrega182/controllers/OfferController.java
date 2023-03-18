@@ -5,11 +5,10 @@ import com.uniovi.sdi2223entrega182.entities.Offer;
 import com.uniovi.sdi2223entrega182.entities.User;
 import com.uniovi.sdi2223entrega182.services.*;
 import com.uniovi.sdi2223entrega182.validators.AddOfferValidator;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
-import com.uniovi.sdi2223entrega182.services.OffersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import com.uniovi.sdi2223entrega182.services.OffersService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -32,6 +31,11 @@ public class OfferController {
     @Autowired
     private AddOfferValidator addOfferValidator;
 
+    @Autowired
+    private LogService logService;
+
+    private static final Logger logger = LoggerFactory.getLogger(SecurityService.class);
+
     @RequestMapping("/offer/list")
     public String getList(Model model){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -45,7 +49,7 @@ public class OfferController {
     }
 
     @RequestMapping(value = "/offer/add")
-    public String getOffer() {
+    public String getOffer(Model model) {
         model.addAttribute("offer", new Offer());
         model.addAttribute("usersList", usersService.getUsers());
         logger.info(String.format("Acceso a OFFER GET"));
