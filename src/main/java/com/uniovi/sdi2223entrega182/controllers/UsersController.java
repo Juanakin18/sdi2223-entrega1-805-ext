@@ -111,27 +111,33 @@ public class UsersController {
         model.addAttribute("usersList", usersService.getAllUsers());
         return "redirect:/admin/userList";
     }
-    @RequestMapping("admin/userList/list/update")
-    public String updateList(Model model){
-        model.addAttribute("usersList", usersService.getAllUsers());
-        return "fragments/tableUsers";
-    }
     @RequestMapping(value = "/admin/usersList/add/{s}", method = RequestMethod.GET)
     public String addSelected(Model model, @PathVariable String s){
-        usersService.addEmailToDelete(s);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String email = auth.getName();
+        if(!s.equals(email))
+            usersService.addEmailToDelete(s);
+        else
+            return "/error";
+        User activeUser = usersService.getUserByEmail(email);
+        model.addAttribute("activeUser",activeUser);
+        model.addAttribute("usersList", usersService.getAllUsers());
         return "/users/list";
     }
     @RequestMapping(value = "/admin/usersList/removeFromList/{s}", method = RequestMethod.GET)
     public String removeSelected(Model model, @PathVariable String s){
-        usersService.deleteEmailToDelete(s);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String email = auth.getName();
+        if(!s.equals(email))
+            usersService.deleteEmailToDelete(s);
+        else
+            return "/error";
+        User activeUser = usersService.getUserByEmail(email);
+        model.addAttribute("activeUser",activeUser);
+        model.addAttribute("usersList", usersService.getAllUsers());
+
         return "/users/list";
     }
-    @RequestMapping(value = "admin/usersList/remove/{id}")
-    public String remove(Model model, @PathVariable String id){
-        usersService.deleteUser(id);
-        model.addAttribute("usersList", usersService.getAllUsers());
-        return "redirect:/admin/userList";
 
-    }
 
 }
