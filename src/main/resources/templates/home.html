@@ -4,7 +4,7 @@
 <body>
 <nav th:replace="fragments/nav"></nav>
 <div>
-    <h2> <span th:text="#{offerts.offerts}"></span></h2>
+    <h2> <span th:text="#{offers.offers}"></span></h2>
     <form class="form-inline" action="/home">
         <div class="form-group">
             <input name="searchText" type="text" class="form-control" size="50"
@@ -16,11 +16,11 @@
         <table class="table table-hover">
             <thead>
             <tr>
-                <th scope="col"><span th:text="#{offerts.image}"></span></th>
-                <th scope="col"><span th:text="#{offerts.title}"></span></th>
-                <th scope="col"><span th:text="#{offerts.description}"></span></th>
-                <th scope="col"><span th:text="#{offerts.details}"></span></th>
-                <th scope="col"><span th:text="#{offerts.euros}"></span></th>
+                <th scope="col"><span th:text="#{offers.image}"></span></th>
+                <th scope="col"><span th:text="#{offers.title}"></span></th>
+                <th scope="col"><span th:text="#{offers.description}"></span></th>
+                <th scope="col"><span th:text="#{offers.details}"></span></th>
+                <th scope="col"><span th:text="#{offers.price}"></span></th>
                 <th scope="col"></th>
                 <th scope="col"></th>
                 <th scope="col"></th>
@@ -38,11 +38,11 @@
                 <td>
                     <div th:if="${offer.available}" >
                         <button  class="btn btn-primary" >
-                           <a  th:href="${'/home/buy/' + offer.id}"><span th:text="#{ofertas.buy}"></span></a>
+                           <a  th:href="${'/home/buy/' + offer.id}"><span th:text="#{offers.buy}"></span></a>
                         </button>
                     </div>
                     <div th:unless="${offer.available}">
-                        <span th:text="#{ofertas.sold}"></span>
+                        <span th:text="#{offers.sold}"></span>
                     </div>
                 </td>
 
