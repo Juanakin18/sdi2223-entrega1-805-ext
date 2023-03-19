@@ -1,7 +1,9 @@
 package com.uniovi.sdi2223entrega182;
 
 import com.uniovi.sdi2223entrega182.pageobjects.*;
+import com.uniovi.sdi2223entrega182.util.SeleniumUtils;
 import org.junit.jupiter.api.*;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
