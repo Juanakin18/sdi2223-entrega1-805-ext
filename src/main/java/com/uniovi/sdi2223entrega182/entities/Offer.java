@@ -20,7 +20,7 @@ public class Offer {
     private String details;
     private Date offerDate;
     private double amount;
-    private boolean available;
+    private boolean available = true;
     private String description;
 
     @ManyToOne

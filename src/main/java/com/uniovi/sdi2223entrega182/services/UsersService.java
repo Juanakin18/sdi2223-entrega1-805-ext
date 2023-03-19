@@ -1,7 +1,9 @@
 package com.uniovi.sdi2223entrega182.services;
 
+import com.uniovi.sdi2223entrega182.entities.Conversation;
 import com.uniovi.sdi2223entrega182.entities.Offer;
 import com.uniovi.sdi2223entrega182.entities.User;
+import com.uniovi.sdi2223entrega182.repositories.ConversationRepository;
 import com.uniovi.sdi2223entrega182.repositories.OffersRepository;
 import com.uniovi.sdi2223entrega182.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,8 @@ public class UsersService {
     private UsersRepository usersRepository;
     @Autowired
     private OffersRepository offersRepository;
+    @Autowired
+    private ConversationRepository conversationRepository;
     @PostConstruct
     public void init() {
     }
@@ -126,6 +130,9 @@ public class UsersService {
                 List<Offer> ofertas = offersRepository.searchAllByEmail(user);
                 for(Offer offer: ofertas)
                     offersRepository.delete(offer);
+                List<Conversation> conversations = conversationRepository.findByUser(user);
+                for(Conversation conversation: conversations)
+                    conversationRepository.delete(conversation);
                 usersRepository.delete(user);
             }
         }
