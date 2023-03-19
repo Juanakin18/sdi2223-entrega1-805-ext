@@ -7,7 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
@@ -48,6 +53,14 @@ public class OffersService {
     public Page<Offer> getOffers(Pageable pageable) {
         Page<Offer> list = offersRepository.findAll(pageable);
         return list;
+    }
+
+    public void addImage(MultipartFile image) throws IOException {
+        Path directorioImagenes = Paths.get("src//main//resources//static/images");
+        String absolutePath = directorioImagenes.toFile().getAbsolutePath();
+        byte[] bytesImg = image.getBytes();
+        Path completePath = Paths.get(absolutePath + "//" + image.getOriginalFilename());
+        Files.write(completePath, bytesImg);
     }
 
 }

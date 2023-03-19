@@ -75,13 +75,8 @@ public class OfferController {
             return "offer/add";
         }
         if (!image.isEmpty()){
-            Path directorioImagenes = Paths.get("src//main//resources//static/images");
-            String absolutePath = directorioImagenes.toFile().getAbsolutePath();
-
             try {
-                byte[] bytesImg = image.getBytes();
-                Path completePath = Paths.get(absolutePath + "//" + image.getOriginalFilename());
-                Files.write(completePath, bytesImg);
+                offersService.addImage(image);
                 offer.setImage(image.getOriginalFilename());
             } catch (IOException e) {
                 e.printStackTrace();

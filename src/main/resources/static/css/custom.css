@@ -17,7 +17,13 @@ footer {
     line-height:60px
 }
 
-img {
-    max-width: 25%;
+img.img-thumbnail.rounded.float-left {
+    max-width: 20%;
+}
+
+a {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
 }
 /* Sticky footer styles-------------------------------------------------- */
