@@ -178,15 +178,17 @@ class Sdi2223Entrega182ApplicationTests {
 
     }
     /**
-     *  Acceder sin estar autenticado a la opcion listado de usuarios
+     *  Acceder a los logs
      */
     @Test
     @Order(30)
     void PR30() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "mariobalotelli@uniovi.es", "12s36");
-        String checkText = "Credenciales erróneas o campos vacíos";
-        assertThrows(Exception.class, () -> {PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");});
+        PO_LoginView.fillLoginForm(driver, "admin@email.com", "admin");
+        PO_HomeView.clickOption(driver, "log", "class", "btn btn-primary");
+        String checkText = "LOGS EN EL SISTEMA";
+        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
 
     }
 
