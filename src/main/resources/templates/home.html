@@ -46,16 +46,15 @@
 
                 <td>
 
-                    <button  class="btn btn-primary">
-                        iniciar conversación
-                    </button>
+                    <a th:href="${'/conversation/chat/' + offer.id}"
+                       >  conversación</a>
 
                 </td>
             </tr>
             </tbody>
         </table>
     </div>
-    <footer th:replace="fragments/pagination"/>
+
 </div>
 <footer th:replace="fragments/footer"></footer>
 </body>

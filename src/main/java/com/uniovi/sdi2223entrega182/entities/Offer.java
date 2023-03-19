@@ -26,6 +26,7 @@ public class Offer {
     @ManyToOne
     @JoinColumn(name="buyer_id")
     private User buyer;
+    private String image;
     @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
@@ -48,6 +49,7 @@ public class Offer {
         this.offerDate = offerDate;
         this.amount = amount;
         this.user = user;
+        this.image = "default-image.png";
         this.available = true;
     }
 
@@ -103,13 +105,12 @@ public class Offer {
         return available;
     }
 
-    public void setAvailable() {
-        this.available = true;
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
     public void setNotAvailable() {
         this.available = false;
     }
-
     public User getUser() {
         return user;
     }
@@ -124,6 +125,14 @@ public class Offer {
 
     public void setBuyer(User buyer) {
         this.buyer = buyer;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     @Override
