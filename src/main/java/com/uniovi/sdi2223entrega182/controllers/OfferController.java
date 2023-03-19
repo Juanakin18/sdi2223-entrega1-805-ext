@@ -87,6 +87,9 @@ public class OfferController {
                 e.printStackTrace();
             }
         }
+        else{
+            offer.setImage("default-image.png");
+        }
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String email = auth.getName();
         User activeUser = usersService.getUserByEmail(email);

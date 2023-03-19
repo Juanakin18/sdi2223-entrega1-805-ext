@@ -5,19 +5,34 @@
 <nav th:replace="fragments/nav"></nav>
 <div class="container">
   <h1>Lista Ofertas</h1>
-  <div th:each="offer : ${offersList}">
-    <p>
-      <img class="img-thumbnail rounded float-left" th:src="@{'/images/' + ${offer.image}}"
-           th:alt="${offer.image}" />
-      <span th:text="${offer.title}"></span>
-      <span th:text="${offer.details}"></span>
-      <span th:text="${offer.amount}"></span>
-      <a th:href="${'/offer/delete/' + offer.id}">Eliminar</a>
-    </p>
+  <div class="table-responsive">
+    <table class="table table-hover" id="tableOffers">
+      <thead>
+      <tr>
+        <th scope="col">Texto descriptivo</th>
+        <th scope="col">Detalles</th>
+        <th scope="col">Cantidad</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="offer : ${offersList}">
+        <td><img class="img-thumbnail rounded float-left" th:src="@{'/images/' + ${offer.image}}" th:alt="${offer.image}" /></td>
+        <td scope="row" th:text="${offer.title}"> 1</td>
+        <td th:text="${offer.details}"> Ejercicio 1</td>
+        <td th:text="${offer.amount}">10</td>
+        <td><a th:href="${'/offer/delete/' + offer.id}">Eliminar</a></td>
+
+      </tr>
+      </tbody>
+    </table>
+    <div th:if="${#lists.isEmpty(offersList)}">
+      No hay ofertas
+    </div>
   </div>
-  <div th:if="${#lists.isEmpty(offersList)}">
-    No hay ofertas
-  </div>
+    </table>
 </div>
 <footer th:replace="fragments/footer"></footer>
 </body>

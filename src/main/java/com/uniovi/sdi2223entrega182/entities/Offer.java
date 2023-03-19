@@ -108,7 +108,9 @@ public class Offer {
     public void setAvailable(boolean available) {
         this.available = available;
     }
-
+    public void setNotAvailable() {
+        this.available = false;
+    }
     public User getUser() {
         return user;
     }

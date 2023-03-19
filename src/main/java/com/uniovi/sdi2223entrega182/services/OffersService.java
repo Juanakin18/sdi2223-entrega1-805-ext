@@ -36,7 +36,7 @@ public class OffersService {
     }
     public void deleteOffer(Long id) {
         offersRepository.deleteById(id);
-        logger.info(String.format("Offer %s deleted" + "offer id: "+ id));
+        logger.info(String.format("Offer %s deleted" + "offer id: ", id.toString()));
     }
 
     public Page<Offer> searchOffersByTitle(Pageable pageable, String searchText) {
