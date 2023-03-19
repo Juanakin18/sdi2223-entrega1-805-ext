@@ -28,10 +28,10 @@
                     /*<![CDATA[*/
                     $( "#Seleccionado"+[[${user.id}]]).click(function() {
                         if($(this).prop('checked')){
-                            $.get("/admin/usersList/add/"+[[${user.email}]]);
+                            $.get("/admin/userList/add/"+[[${user.email}]]);
                             console.log([[${user.email}]]);
                         }else{
-                            $.get("/admin/usersList/removeFromList/"+[[${user.email}]]);
+                            $.get("/admin/userList/removeFromList/"+[[${user.email}]]);
                             console.log([[${user.email}]]);
                         }
                     });

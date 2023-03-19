@@ -111,7 +111,7 @@ public class UsersController {
         model.addAttribute("usersList", usersService.getAllUsers());
         return "redirect:/admin/userList";
     }
-    @RequestMapping(value = "/admin/usersList/add/{s}", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/userList/add/{s}", method = RequestMethod.GET)
     public String addSelected(Model model, @PathVariable String s){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String email = auth.getName();
@@ -124,7 +124,7 @@ public class UsersController {
         model.addAttribute("usersList", usersService.getAllUsers());
         return "/users/list";
     }
-    @RequestMapping(value = "/admin/usersList/removeFromList/{s}", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/userList/removeFromList/{s}", method = RequestMethod.GET)
     public String removeSelected(Model model, @PathVariable String s){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String email = auth.getName();
