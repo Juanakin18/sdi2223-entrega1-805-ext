@@ -67,14 +67,14 @@ public class ConversationController {
     public String send(@PathVariable Long idChat, @RequestParam(name = "mensaje", required = true) String text,
                        Model model, Principal principal) {
         String email = principal.getName();
-        User actualUser = usersService.getUserByEmail(email);
+        User user = usersService.getUserByEmail(email);
         Conversation c = conversationService.getConversation(idChat);
 
       User u = c.getOffer().getUser();
       if(!text.isEmpty()){
-       conversationService.sendMessage(c, actualUser, u, text);}
-         model.addAttribute("user", actualUser);
-        model.addAttribute("messages", conversationService.getMessages(c));
+       conversationService.sendMessage(c, user, u, text);}
+         model.addAttribute("user", user);
+         model.addAttribute("messages", conversationService.getMessages(c));
 
         return "redirect:/conversation/chat/" +c.getOffer().getId()+"/" +c.getId();
     }

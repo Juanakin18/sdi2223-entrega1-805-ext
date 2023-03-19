@@ -27,7 +27,7 @@
 <form th:action="@{/conversation/send/{id}/(id=${conversation.id})}"
       method="post">
   <input type="text" name="mensaje"
-         th:placeholder="#{typeMessage}" />
+         th:placeholder="#{sendMessage}" />
   <button type="submit"
          class = "btn" >
    enviar

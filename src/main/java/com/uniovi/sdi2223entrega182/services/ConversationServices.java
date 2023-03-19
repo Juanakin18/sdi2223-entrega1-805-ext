@@ -55,9 +55,9 @@ public class ConversationServices {
         return messageRepository.findMessages(c);
     }
 
-    public Conversation getConversation(Long idChat) {
+    public Conversation getConversation(Long idConversation) {
 
-       Conversation c =  conversationsRepository.findById(idChat).get();
+       Conversation c =  conversationsRepository.findById(idConversation).get();
         if(c.getCreatorConver().getEmail().equals(c.getCreatorOffer().getEmail())){
             conversationsRepository.deleteById(c.getId());
             return null;
@@ -66,9 +66,9 @@ public class ConversationServices {
         return c;
 
     }
-    public Conversation getConversation(Long idChat,User u) {
+    public Conversation getConversation(Long idConversation,User u) {
 
-        Conversation c =  conversationsRepository.findById(idChat).get();
+        Conversation c =  conversationsRepository.findById(idConversation).get();
         if(c.getCreatorConver().getEmail().equals(c.getCreatorOffer().getEmail())){
             conversationsRepository.deleteById(c.getId());
             return null;
