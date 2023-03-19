@@ -16,4 +16,8 @@ footer {
     text-align:center;
     line-height:60px
 }
+
+img {
+    max-width: 25%;
+}
 /* Sticky footer styles-------------------------------------------------- */

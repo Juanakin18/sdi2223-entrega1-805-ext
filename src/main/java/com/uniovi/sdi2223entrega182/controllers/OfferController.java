@@ -9,10 +9,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.uniovi.sdi2223entrega182.services.OffersService;
+import com.uniovi.sdi2223entrega182.services.UsersService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+import com.uniovi.sdi2223entrega182.validators.AddOfferValidator;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,14 +65,35 @@ public class OfferController {
     public String getOffer(Model model) {
         model.addAttribute("offer", new Offer());
         model.addAttribute("usersList", usersService.getUsers());
-        logger.info(String.format("Acceso a OFFER GET"));
-        Log log = new Log("PET","OFFER CONTROLLER GET", new Date());
-        logService.addLog(log);
         return "offer/add";
     }
 
     @RequestMapping(value = "/offer/add", method = RequestMethod.POST)
-    public String setOffer(@ModelAttribute Offer offer) {
+    public String setOffer(@Validated Offer offer, @RequestParam("file") MultipartFile image, BindingResult result) {
+        addOfferValidator.validate(offer, result);
+        if (result.hasErrors()) {
+            return "offer/add";
+        }
+        if (!image.isEmpty()){
+            Path directorioImagenes = Paths.get("src//main//resources//static/images");
+            String absolutePath = directorioImagenes.toFile().getAbsolutePath();
+
+            try {
+                byte[] bytesImg = image.getBytes();
+                Path completePath = Paths.get(absolutePath + "//" + image.getOriginalFilename());
+                Files.write(completePath, bytesImg);
+                offer.setImage(image.getOriginalFilename());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else{
+            offer.setImage("default-image.png");
+        }
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String email = auth.getName();
+        User activeUser = usersService.getUserByEmail(email);
+        offer.setUser(activeUser);
         offersService.addOffer(offer);
         logger.info(String.format("Acceso a OFFER ADD"));
         Log log = new Log("PET","OFFER CONTROLLER ADD", new Date());
