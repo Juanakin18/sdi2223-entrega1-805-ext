@@ -90,7 +90,7 @@ public class HomeController {
         return "redirect:/home";
     }
 
-    @RequestMapping("/log")
+    @RequestMapping("/logs")
     public String log(Model model){
         model.addAttribute("logslist", logService.getLogs());
         if (!loggin){
@@ -99,12 +99,12 @@ public class HomeController {
             logService.addLog(log);
             loggin = true;
         }
-        return "log";
+        return "logs";
     }
-    @RequestMapping("/log/delete/")
+    @RequestMapping("/logs/delete/")
     public String deleteOffer(){
         logService.deleteAll();
-        return "redirect:/log";
+        return "redirect:/logs";
     }
 
     private Page<Offer> getPageOffers(Pageable pageable, String searchText ){

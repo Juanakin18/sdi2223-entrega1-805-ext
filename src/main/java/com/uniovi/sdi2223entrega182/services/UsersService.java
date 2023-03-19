@@ -1,10 +1,11 @@
 package com.uniovi.sdi2223entrega182.services;
 
-import com.uniovi.sdi2223entrega182.entities.Log;
+import com.uniovi.sdi2223entrega182.entities.Conversation;
+import com.uniovi.sdi2223entrega182.entities.Offer;
 import com.uniovi.sdi2223entrega182.entities.User;
+import com.uniovi.sdi2223entrega182.repositories.ConversationRepository;
+import com.uniovi.sdi2223entrega182.repositories.OffersRepository;
 import com.uniovi.sdi2223entrega182.repositories.UsersRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,12 +13,14 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class UsersService {
     public static double INITIAL_MONEY = 100d;
     public static int USER = 1;
+    private List<String> lista = new ArrayList<>();
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -26,6 +29,10 @@ public class UsersService {
 
     @Autowired
     private UsersRepository usersRepository;
+    @Autowired
+    private OffersRepository offersRepository;
+    @Autowired
+    private ConversationRepository conversationRepository;
     @PostConstruct
     public void init() {
     }
@@ -61,7 +68,6 @@ public class UsersService {
     public void deleteUser(String email) {
         User user = usersRepository.findByEmail(email);
         usersRepository.deleteById(user.getId());
-
     }
 
     // ------------------ consultas --------------------
@@ -98,14 +104,50 @@ public class UsersService {
         if (user != null){
             httpSession.setAttribute("money",user.getMoney());
             httpSession.setAttribute("email", user.getEmail());
-            httpSession.setAttribute("euros", "€");
         }
         return user;
     }
+    /**
+     * Método que devuelve todos los usuarios registrados
+     * @return La lista de todos los usuarios registrados
+     */
+    public List<User> getAllUsers() {
+        return usersRepository.findAll();
+    }
 
-    public List<User> getUsers() {
-        List<User> users = new ArrayList<User>();
-        usersRepository.findAll().forEach(users::add);
-        return users;
+
+
+
+
+    /**
+     * Método que borra todos los usuarios seleccionados
+     */
+    public void removeUsers(){
+
+        List<User> users = usersRepository.findAll();
+        for(User user : users){
+            if(lista.contains(user.getEmail())){
+                List<Offer> ofertas = offersRepository.searchAllByEmail(user);
+                for(Offer offer: ofertas)
+                    offersRepository.delete(offer);
+                List<Conversation> conversations = conversationRepository.findByUser(user);
+                for(Conversation conversation: conversations)
+                    conversationRepository.delete(conversation);
+                usersRepository.delete(user);
+            }
+        }
+        lista.clear();
+    }
+    public void addEmailToDelete(String email){
+        if(!lista.contains(email))
+            lista.add(email);
+    }
+    public void deleteEmailToDelete(String email){
+        if(lista.contains(email))
+            lista.remove(email);
+    }
+
+    public Object getUsers() {
+        return null;
     }
 }

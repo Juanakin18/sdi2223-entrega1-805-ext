@@ -34,7 +34,7 @@ public class LoginHandler  extends SimpleUrlAuthenticationSuccessHandler {
         logger.info(String.format("LOGIN EXITOSO DEL SISTEMA"));
         String email = request.getParameter("username");
         if(email.equals("admin@email.com")){
-            super.setDefaultTargetUrl("/home");//user/list
+            super.setDefaultTargetUrl("/admin/userList");
         }else{
             super.setDefaultTargetUrl("/offer/list");
         }

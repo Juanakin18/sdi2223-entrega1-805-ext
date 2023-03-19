@@ -5,7 +5,7 @@
 <nav th:replace="fragments/nav"></nav>
 <div class="container">
     <h1>LOGS EN EL SISTEMA</h1>
-    <a th:href="${'/log/delete/'}">Borrar todos</a>
+    <a th:href="${'/logs/delete/'}">Borrar todos</a>
     <div th:each="log : ${logslist}">
         <p>
             <span th:text="${log.type}"></span>
