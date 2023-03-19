@@ -18,7 +18,7 @@ class Sdi2223Entrega182ApplicationTests {
 
     static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
     //static String Geckodriver = "C:\\Path\\geckodriver-v0.30.0-win64.exe";
-    static String Geckodriver = "D:\\SDI\\Clase 5\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+    static String Geckodriver = "C:\\Users\\ivand\\OneDrive\\Escritorio\\SDI\\P5\\PL-SDI-Sesio╠ün5-material\\geckodriver-v0.30.0-win64.exe";
     static WebDriver driver = getDriver(PathFirefox, Geckodriver);
     static String URL = "http://localhost:8090";
     public static WebDriver getDriver(String PathFirefox, String Geckodriver) {
@@ -470,6 +470,8 @@ class Sdi2223Entrega182ApplicationTests {
         String checkText = "No hay logs disponibles";
         List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
         Assertions.assertEquals(checkText, result.get(0).getText());
+        //Ahora nos desconectamos y comprobamos que aparece el menú de registrarse
+        PO_PrivateView.clickOption(driver, "logout", "class", "btn btn-primary");
     }
     /**
      *  Crear una oferta con imagen adjunta
@@ -534,4 +536,107 @@ class Sdi2223Entrega182ApplicationTests {
         PO_PrivateView.clickOption(driver, "logout", "class", "btn btn-primary");
     }
 
+    /**
+     *Sobre una búsqueda determinada de ofertas (a elección de desarrollador), enviar un mensaje
+     * a una oferta concreta. Se abriría dicha conversación por primera vez. Comprobar que el mensaje aparece
+     * en la conversación.
+     */
+   @Test
+     @Order(26)
+    void PR26() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "djuka@uniovi.es", "123456");
+        //Cmmprobamos que entramos en la pagina privada del usuario
+        PO_View.checkElementBy(driver, "text", "djuka@uniovi.es");
+        //Pinchamos en home
+        List<WebElement> elements = PO_View.checkElementBy(driver, "free", "/html/body/nav/div/ul[1]/li[1]/a");
+        elements.get(0).click();
+        //Pinchamos en la conversación:
+         elements = PO_View.checkElementBy(driver, "free", "/html/body/div/div[1]/table/tbody/tr[3]/td[6]/a");
+        elements.get(0).click();
+        //enviamos algo
+        PO_Conversation.sendConv(driver, "hola");
+        //comprobamos que se envió
+        elements = PO_View.checkElementBy(driver, "text", "hola");
+       //Ahora nos desconectamos y comprobamos que aparece el menú de registrarse
+       PO_PrivateView.clickOption(driver, "logout", "class", "btn btn-primary");
+
+
+
+    }
+    /**
+     *Enviar un mensaje a una conversación ya existente accediendo desde el botón/enlace
+     * “Conversación”. Comprobar que el mensaje aparece en la conversación.
+     */
+    @Test
+    @Order(27)
+    void PR27() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "djuka@uniovi.es", "123456");
+        //Cmmprobamos que entramos en la pagina privada del usuario
+        PO_View.checkElementBy(driver, "text", "djuka@uniovi.es");
+        //Pinchamos en home
+        List<WebElement> elements = PO_View.checkElementBy(driver, "free", "/html/body/nav/div/ul[1]/li[1]/a");
+        elements.get(0).click();
+        //Pinchamos en la conversación ya creada:
+        elements = PO_View.checkElementBy(driver, "free", "/html/body/div/div[1]/table/tbody/tr[3]/td[6]/a");
+        elements.get(0).click();
+       //comprobamos que el mensaje anterior aparece en la conversación
+        elements = PO_View.checkElementBy(driver, "text", "hola");
+        //Ahora nos desconectamos y comprobamos que aparece el menú de registrarse
+        PO_PrivateView.clickOption(driver, "logout", "class", "btn btn-primary");
+    }
+    /**
+     *Mostrar el listado de conversaciones ya abiertas. Comprobar que el listado contiene la
+     * cantidad correcta de conversaciones.
+     */
+    @Test
+    @Order(28)
+    void PR28() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "djuka@uniovi.es", "123456");
+        //Cmmprobamos que entramos en la pagina privada del usuario
+        PO_View.checkElementBy(driver, "text", "djuka@uniovi.es");
+
+        //Pinchamos en lista de conversaciones
+        List<WebElement> elements = PO_View.checkElementBy(driver, "free", "/html/body/nav/div/ul[1]/li[7]/a");
+
+        //comprobamos que hay 1 conversación creada
+        Assertions.assertEquals(1,elements.size());
+        //Ahora nos desconectamos y comprobamos que aparece el menú de registrarse
+        PO_PrivateView.clickOption(driver, "logout", "class", "btn btn-primary");
+
+    }
+    @Test
+    @Order(35)
+    void PR35() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "djuka@uniovi.es", "123456");
+        //Cmmprobamos que entramos en la pagina privada del usuario
+        PO_View.checkElementBy(driver, "text", "djuka@uniovi.es");
+
+        //Pinchamos en lista de conversaciones
+        List<WebElement> elements = PO_View.checkElementBy(driver, "free", "/html/body/nav/div/ul[1]/li[7]/a");
+
+        //comprobamos que hay 1 conversación creada
+        Assertions.assertEquals(1,elements.size());
+        //Ahora nos desconectamos y comprobamos que aparece el menú de registrarse
+        PO_PrivateView.clickOption(driver, "logout", "class", "btn btn-primary");
+    }
+    @Test
+    @Order(36)
+    void PR36() {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "djuka@uniovi.es", "123456");
+        //Cmmprobamos que entramos en la pagina privada del usuario
+        PO_View.checkElementBy(driver, "text", "djuka@uniovi.es");
+
+        //Pinchamos en lista de conversaciones
+        List<WebElement> elements = PO_View.checkElementBy(driver, "free", "/html/body/nav/div/ul[1]/li[7]/a");
+
+        //comprobamos que hay 1 conversación creada
+        Assertions.assertEquals(1,elements.size());
+        //Ahora nos desconectamos y comprobamos que aparece el menú de registrarse
+        PO_PrivateView.clickOption(driver, "logout", "class", "btn btn-primary");
+    }
 }
