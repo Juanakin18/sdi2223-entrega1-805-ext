@@ -25,6 +25,14 @@
                     <a class="dropdown-item" href="/offer/add">Agregar Oferta</a>
                 </div>
             </li>
+            <li class="nav-item dropdown active" sec:authorize="hasRole('ROLE_USER')" >
+                <a class="nav-link dropdown-toggle" href="#" id="conversationDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false"> Conversaciones
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/conversation/list">Ver Conversaciones</a>
+                </div>
+            </li>
         </ul>
         <ul class="navbar-nav text-align-center">
             <li class="nav-item ">
