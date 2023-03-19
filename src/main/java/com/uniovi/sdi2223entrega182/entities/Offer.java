@@ -31,7 +31,7 @@ public class Offer {
     @JoinColumn(name="user_id")
     private User user;
 
-    public Offer(){    }
+    public Offer(){   }
 
     public Offer(Long id, String title, String details, Date offerDate, double amount) {
         this.id = id;

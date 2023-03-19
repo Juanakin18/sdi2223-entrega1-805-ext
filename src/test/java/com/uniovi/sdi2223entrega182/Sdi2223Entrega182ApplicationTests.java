@@ -189,15 +189,15 @@ class Sdi2223Entrega182ApplicationTests {
         PO_LoginView.fillLoginForm(driver, "mariobalotelli@uniovi.es", "123456");
         //Cmmprobamos que entramos en la pagina privada del usuario
         PO_View.checkElementBy(driver, "text", "mariobalotelli@uniovi.es");
-        //Pinchamos en la opción de menú de ofertas: //li[contains(@id, 'marks-menu')]/a
+        //Pinchamos en la opción de menú de ofertas:
         List<WebElement> elements = PO_View.checkElementBy(driver, "free", "/html/body/nav/div/ul[1]/li[6]");
         elements.get(0).click();
-        //Esperamos a que aparezca la opción de añadir nota: //a[contains(@href, 'mark/add')]
+        //Esperamos a que aparezca la opción de añadir oferta: //a[contains(@href, 'offer/add')]
         elements = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/add')]");
-        //Pinchamos en agregar Nota.
+        //Pinchamos en agregar Oferta.
         elements.get(0).click();
 
-        //Ahora vamos a rellenar la nota. //option[contains(@value, '4')]
+        //Ahora vamos a rellenar la oferta.
         String checkText = "Oferta Nueva 1";
         PO_AddOfferView.fillForm(driver, checkText, "detalles de la oferta", "300");
 
@@ -218,21 +218,21 @@ class Sdi2223Entrega182ApplicationTests {
         PO_LoginView.fillLoginForm(driver, "mariobalotelli@uniovi.es", "123456");
         //Cmmprobamos que entramos en la pagina privada del usuario
         PO_View.checkElementBy(driver, "text", "mariobalotelli@uniovi.es");
-        //Pinchamos en la opción de menú de ofertas: //li[contains(@id, 'marks-menu')]/a
+        //Pinchamos en la opción de menú de ofertas:
         List<WebElement> elements = PO_View.checkElementBy(driver, "free", "/html/body/nav/div/ul[1]/li[6]");
         elements.get(0).click();
-        //Esperamos a que aparezca la opción de añadir nota: //a[contains(@href, 'mark/add')]
+        //Esperamos a que aparezca la opción de añadir oferta: //a[contains(@href, 'offer/add')]
         elements = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/add')]");
-        //Pinchamos en agregar Nota.
+        //Pinchamos en agregar Oferta.
         elements.get(0).click();
 
-        //Ahora vamos a rellenar la nota. //option[contains(@value, '4')]
+        //Ahora vamos a rellenar la oferta.
         String checkText = "Oferta Nueva 1";
         PO_AddOfferView.fillForm(driver, checkText, "detalles de la oferta", "-1");
 
         List<WebElement> result = PO_SignUpView.checkElementByKey(driver, "Error.addOffer.amount.domain",
                 PO_Properties.getSPANISH() );
-        //Comprobamos el error de contraseña mal repetida
+        //Comprobamos el error de valor negativo en la cantidad
         checkText = PO_HomeView.getP().getString("Error.addOffer.amount.domain",
                 PO_Properties.getSPANISH());
         Assertions.assertEquals(checkText , result.get(0).getText());
@@ -248,17 +248,18 @@ class Sdi2223Entrega182ApplicationTests {
         PO_LoginView.fillLoginForm(driver, "mariobalotelli@uniovi.es", "123456");
         //Cmmprobamos que entramos en la pagina privada del usuario
         PO_View.checkElementBy(driver, "text", "mariobalotelli@uniovi.es");
-        //Pinchamos en la opción de menú de ofertas: //li[contains(@id, 'marks-menu')]/a
+        //Pinchamos en la opción de menú de ofertas:
         List<WebElement> elements = PO_View.checkElementBy(driver, "free", "/html/body/nav/div/ul[1]/li[6]");
         elements.get(0).click();
-        //Esperamos a que aparezca la opción de añadir nota: //a[contains(@href, 'mark/add')]
+        //Esperamos a que aparezca la opción de añadir Oferta: //a[contains(@href, 'offer/add')]
         elements = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/list')]");
         //Pinchamos en listar ofertas.
         elements.get(0).click();
         //Contamos el número de filas de ofertas
-        List<WebElement> markList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
+        List<WebElement> offerList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
                 PO_View.getTimeout());
-        Assertions.assertEquals(4, markList.size());
+        // Deberian ser 5 (las 4 iniciales mas la añadida en el test 15)
+        Assertions.assertEquals(5, offerList.size());
         //Ahora nos desconectamos y comprobamos que aparece el menú de registro
         PO_PrivateView.clickOption(driver, "logout", "class", "btn btn-primary");
 
@@ -273,20 +274,20 @@ class Sdi2223Entrega182ApplicationTests {
         PO_LoginView.fillLoginForm(driver, "mariobalotelli@uniovi.es", "123456");
         //Cmmprobamos que entramos en la pagina privada del usuario
         PO_View.checkElementBy(driver, "text", "mariobalotelli@uniovi.es");
-        //Pinchamos en la opción de menú de ofertas: //li[contains(@id, 'marks-menu')]/a
+        //Pinchamos en la opción de menú de ofertas:
         List<WebElement> elements = PO_View.checkElementBy(driver, "free", "/html/body/nav/div/ul[1]/li[6]");
         elements.get(0).click();
-        //Esperamos a que aparezca la opción de añadir nota: //a[contains(@href, 'mark/add')]
+        //Esperamos a que aparezca la opción de añadir oferta: //a[contains(@href, 'offer/add')]
         elements = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/list')]");
         //Pinchamos en listar ofertas.
         elements.get(0).click();
         //Pinchamos en el enlace de borrado de la primera oferta
         elements = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/delete')]");
         elements.get(0).click();
-        //Contamos el número de filas de ofertas
-        List<WebElement> markList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
+        //Contamos el número de filas de ofertas y vemos que son 3
+        List<WebElement> offerList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
                 PO_View.getTimeout());
-        Assertions.assertEquals(3, markList.size());
+        Assertions.assertEquals(4, offerList.size());
         //Ahora nos desconectamos y comprobamos que aparece el menú de registro
         PO_PrivateView.clickOption(driver, "logout", "class", "btn btn-primary");
     }
@@ -300,10 +301,10 @@ class Sdi2223Entrega182ApplicationTests {
         PO_LoginView.fillLoginForm(driver, "mariobalotelli@uniovi.es", "123456");
         //Cmmprobamos que entramos en la pagina privada del usuario
         PO_View.checkElementBy(driver, "text", "mariobalotelli@uniovi.es");
-        //Pinchamos en la opción de menú de ofertas: //li[contains(@id, 'marks-menu')]/a
+        //Pinchamos en la opción de menú de ofertas:
         List<WebElement> elements = PO_View.checkElementBy(driver, "free", "/html/body/nav/div/ul[1]/li[6]");
         elements.get(0).click();
-        //Esperamos a que aparezca la opción de añadir nota: //a[contains(@href, 'mark/add')]
+        //Esperamos a que aparezca la opción de añadir oferta: //a[contains(@href, 'offer/add')]
         elements = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/list')]");
         //Pinchamos en listar ofertas.
         elements.get(0).click();
@@ -311,9 +312,9 @@ class Sdi2223Entrega182ApplicationTests {
         elements = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/delete')]");
         elements.get(elements.size()-1).click();
         //Contamos el número de filas de ofertas
-        List<WebElement> markList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
+        List<WebElement> offerList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
                 PO_View.getTimeout());
-        Assertions.assertEquals(3, markList.size());
+        Assertions.assertEquals(3, offerList.size());
         //Ahora nos desconectamos y comprobamos que aparece el menú de registro
         PO_PrivateView.clickOption(driver, "logout", "class", "btn btn-primary");
     }
@@ -339,24 +340,25 @@ class Sdi2223Entrega182ApplicationTests {
         PO_LoginView.fillLoginForm(driver, "mariobalotelli@uniovi.es", "123456");
         //Cmmprobamos que entramos en la pagina privada del usuario
         PO_View.checkElementBy(driver, "text", "mariobalotelli@uniovi.es");
-        //Pinchamos en la opción de menú de ofertas: //li[contains(@id, 'marks-menu')]/a
+        //Pinchamos en la opción de menú de ofertas:
         List<WebElement> elements = PO_View.checkElementBy(driver, "free", "/html/body/nav/div/ul[1]/li[6]");
         elements.get(0).click();
-        //Esperamos a que aparezca la opción de añadir nota: //a[contains(@href, 'mark/add')]
+        //Esperamos a que aparezca la opción de añadir oferta: //a[contains(@href, 'offer/add')]
         elements = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/add')]");
-        //Pinchamos en agregar Nota.
+        //Pinchamos en agregar Oferta.
         elements.get(0).click();
 
-        //Ahora vamos a rellenar la nota. //option[contains(@value, '4')]
+        //Ahora vamos a rellenar la oferta.
         String checkText = "Oferta Nueva 1";
-        PO_AddOfferView.fillFormWithImage(driver, checkText, "detalles de la oferta", "300", "Descargas//prueba.png");
+        // IMPORTANTE: actualizar el path hacia la imagen de prueba
+        PO_AddOfferView.fillFormWithImage(driver, checkText, "detalles de la oferta", "300", "C:\\Users\\Javier\\Desktop\\SDI\\LABORATORIOS\\PROYECTO\\sdi2223-entrega1-82\\src\\main\\resources\\static\\images\\pruebas\\prueba.png");
 
         //Comprobamos que aparece la oferta en la página
         elements = PO_View.checkElementBy(driver, "text", checkText);
         Assertions.assertEquals(checkText, elements.get(0).getText());
         //Comprobamos que aparece la nueva imagen
         elements = PO_View.checkElementBy(driver, "free", "//img[contains(@alt, 'prueba.png')]");
-        Assertions.assertTrue(elements.size()==5);
+        Assertions.assertEquals(elements.size(), 1);
         //Ahora nos desconectamos y comprobamos que aparece el menú de registrarse
         PO_PrivateView.clickOption(driver, "logout", "class", "btn btn-primary");
     }
@@ -370,24 +372,24 @@ class Sdi2223Entrega182ApplicationTests {
         PO_LoginView.fillLoginForm(driver, "mariobalotelli@uniovi.es", "123456");
         //Cmmprobamos que entramos en la pagina privada del usuario
         PO_View.checkElementBy(driver, "text", "mariobalotelli@uniovi.es");
-        //Pinchamos en la opción de menú de ofertas: //li[contains(@id, 'marks-menu')]/a
+        //Pinchamos en la opción de menú de ofertas:
         List<WebElement> elements = PO_View.checkElementBy(driver, "free", "/html/body/nav/div/ul[1]/li[6]");
         elements.get(0).click();
-        //Esperamos a que aparezca la opción de añadir nota: //a[contains(@href, 'mark/add')]
+        //Esperamos a que aparezca la opción de añadir oferta: //a[contains(@href, 'offer/add')]
         elements = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/add')]");
-        //Pinchamos en agregar Nota.
+        //Pinchamos en agregar Oferta.
         elements.get(0).click();
 
-        //Ahora vamos a rellenar la nota. //option[contains(@value, '4')]
+        //Ahora vamos a rellenar la oferta.
         String checkText = "Oferta Nueva 1";
         PO_AddOfferView.fillForm(driver, checkText, "detalles de la oferta", "300");
 
         //Comprobamos que aparece la oferta en la página
         elements = PO_View.checkElementBy(driver, "text", checkText);
         Assertions.assertEquals(checkText, elements.get(0).getText());
-        //Comprobamos que el numero de imagenes por defecto es 5
+        //Comprobamos que el numero de imagenes por defecto es 4
         elements = PO_View.checkElementBy(driver, "free", "//img[contains(@alt, 'default-image.png')]");
-        Assertions.assertTrue(elements.size()==5);
+        Assertions.assertEquals(elements.size(), 4);
         //Ahora nos desconectamos y comprobamos que aparece el menú de registrarse
         PO_PrivateView.clickOption(driver, "logout", "class", "btn btn-primary");
     }

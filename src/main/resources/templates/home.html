@@ -16,6 +16,7 @@
         <table class="table table-hover">
             <thead>
             <tr>
+                <th scope="col"><span th:text="#{offerts.image}"></span></th>
                 <th scope="col"><span th:text="#{offerts.title}"></span></th>
                 <th scope="col"><span th:text="#{offerts.description}"></span></th>
                 <th scope="col"><span th:text="#{offerts.details}"></span></th>
@@ -28,6 +29,7 @@
             </thead>
             <tbody>
             <tr th:each="offer : ${offerList}">
+                <td scope="row"><img class="img-thumbnail rounded float-left" th:src="@{'/images/' + ${offer.image}}" th:alt="${offer.image}" /></td>
                 <td scope="row" th:text="${offer.title}">Título</td>
                 <td scope="row" th:text="${offer.description}">Descripcion</td>
                 <td scope="row" th:text="${offer.details}">Detalles</td>
