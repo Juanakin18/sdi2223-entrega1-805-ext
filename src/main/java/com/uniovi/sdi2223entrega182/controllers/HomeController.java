@@ -43,6 +43,10 @@ public class HomeController {
     @Autowired
     private UsersService usersService;
 
+    /**
+     * Metodo que devuelve el index de la pagina
+     * @return
+     */
     @RequestMapping("/")
     public String index() {
         logger.info(String.format("Acceso a HOME INDEX"));
@@ -51,10 +55,17 @@ public class HomeController {
         return "index";
     }
 
+    /**
+     * Metodo que devuelve el home de la pagina
+     * @param model
+     * @param pageable
+     * @param searchText
+     * @return
+     */
     @RequestMapping("/home")
     public String home(Model model, Pageable pageable, @RequestParam(value = "", required = false)String searchText) {
-        Page<Offer> offers = this.getPageOffers(pageable, searchText);
-        User activeUser = getUser();
+        Page<Offer> offers = this.offersService.getPageOffers(pageable, searchText);
+        User activeUser = usersService.getUser();
 
         model.addAttribute("offerList", offers.getContent());
         model.addAttribute("page", offers);
@@ -68,59 +79,4 @@ public class HomeController {
         return "home";
     }
 
-    @RequestMapping(value = {"/home/buy/{id}"}, method = RequestMethod.GET)
-    public String homeBuy(Model model, @PathVariable Long id) {
-        User activeUser = getUser();
-        Offer offer = offersService.getOffer(id);
-
-        if(activeUser.getMoney()< offer.getAmount() || !offer.isAvailable() || activeUser.getOffers().contains(offer)){
-            return "redirect:/home";
-        }
-
-        activeUser.setMoney(activeUser.getMoney() - offer.getAmount());
-        offer.setBuyer(activeUser);
-        Set<Offer> offerSet = activeUser.getOffersBought();
-        offerSet.add(offer);
-        activeUser.setOffersBought(offerSet);
-        offer.setNotAvailable();
-
-        usersService.addUser(activeUser);
-        offersService.addOffer(offer);
-
-        return "redirect:/home";
-    }
-
-    @RequestMapping("/logs")
-    public String log(Model model){
-        model.addAttribute("logslist", logService.getLogs());
-        if (!loggin){
-            logger.info(String.format("Acceso a LOG LIST"));
-            Log log = new Log("PET","LOG CONTROLLER LIST", new Date());
-            logService.addLog(log);
-            loggin = true;
-        }
-        return "logs";
-    }
-    @RequestMapping("/logs/delete/")
-    public String deleteOffer(){
-        logService.deleteAll();
-        return "redirect:/logs";
-    }
-
-    private Page<Offer> getPageOffers(Pageable pageable, String searchText ){
-        Page<Offer> offers;
-        if(searchText != null && !searchText.isEmpty()){
-            offers = offersService.searchOffersByTitle(pageable, searchText);
-        } else {
-            offers = offersService.getOffers(pageable);
-        }
-        return offers;
-    }
-
-    private User getUser(){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String email = auth.getName();
-        User activeUser = usersService.getUserByEmail(email);
-        return activeUser;
-    }
 }

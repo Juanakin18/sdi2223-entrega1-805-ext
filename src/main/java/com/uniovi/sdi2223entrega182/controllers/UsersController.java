@@ -63,8 +63,12 @@ public class UsersController {
      */
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
     public String signup(Model model) {
-        model.addAttribute("user", new User());
-        return "signup";
+        if (usersService.getUser() != null){
+            return "redirect:/home";
+        }else{
+            model.addAttribute("user", new User());
+            return "signup";
+        }
     }
 
     /**
@@ -75,7 +79,11 @@ public class UsersController {
      */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login() {
-        return "login";
+        if (usersService.getUser() != null){
+            return "redirect:/home";
+        }else{
+            return "login";
+        }
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.uniovi.sdi2223entrega182.services;
 import com.uniovi.sdi2223entrega182.entities.Offer;
+import com.uniovi.sdi2223entrega182.entities.User;
 import com.uniovi.sdi2223entrega182.repositories.OffersRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,10 +14,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class OffersService {
@@ -38,6 +36,12 @@ public class OffersService {
         // Si en Id es null le asignamos el ultimo + 1 de la lista
         offersRepository.save(offer);
         logger.info(String.format("Offer %s added", offer.getTitle()));
+    }
+    public void updateOffer(Offer offer) {
+        // Si en Id es null le asignamos el ultimo + 1 de la lista
+
+        offersRepository.save(offer);
+
     }
     public void deleteOffer(Long id) {
         offersRepository.deleteById(id);
@@ -62,5 +66,22 @@ public class OffersService {
         Path completePath = Paths.get(absolutePath + "//" + image.getOriginalFilename());
         Files.write(completePath, bytesImg);
     }
+    public Page<Offer> getPageOffers(Pageable pageable, String searchText ){
+        Page<Offer> offers;
+        if(searchText != null && !searchText.isEmpty()){
+            offers = searchOffersByTitle(pageable, searchText);
+        } else {
+            offers = getOffers(pageable);
+        }
+        return offers;
+    }
 
+    public void updateOfferUser(User activeUser, Offer offer) {
+        activeUser.setMoney(activeUser.getMoney() - offer.getAmount());
+        offer.setBuyer(activeUser);
+        Set<Offer> offerSet = activeUser.getOffersBought();
+        offerSet.add(offer);
+        activeUser.setOffersBought(offerSet);
+        offer.setNotAvailable();
+    }
 }

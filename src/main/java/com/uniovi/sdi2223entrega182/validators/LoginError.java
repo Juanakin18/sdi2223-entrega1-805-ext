@@ -25,7 +25,7 @@ public class LoginError extends SimpleUrlAuthenticationFailureHandler {
     private  Logger logger = LoggerFactory.getLogger(this.getClass());
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        setDefaultFailureUrl("/login?error=true&message=" + exception.getMessage());
+        setDefaultFailureUrl("/login?error");
         service.addLog(new Log("LOGIN-ERR",request.getParameter("username"), new Date()));
         logger.info(String.format("LOGIN EXITOSO DEL SISTEMA"));
         super.onAuthenticationFailure(request, response, exception);

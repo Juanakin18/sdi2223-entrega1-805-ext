@@ -7,6 +7,8 @@ import com.uniovi.sdi2223entrega182.repositories.ConversationRepository;
 import com.uniovi.sdi2223entrega182.repositories.OffersRepository;
 import com.uniovi.sdi2223entrega182.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -113,6 +115,12 @@ public class UsersService {
      */
     public List<User> getAllUsers() {
         return usersRepository.findAll();
+    }
+    public User getUser(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String email = auth.getName();
+        User activeUser = getUserByEmail(email);
+        return activeUser;
     }
 
 
