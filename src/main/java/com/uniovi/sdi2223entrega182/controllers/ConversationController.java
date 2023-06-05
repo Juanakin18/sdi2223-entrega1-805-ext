@@ -33,21 +33,36 @@ public class ConversationController {
     @Autowired
     private ConversationServices conversationService;
 
-
+    /**
+     * Metodo que devuelve un chat
+     * @param offerId
+     * @param model
+     * @param user
+     * @return
+     */
     @RequestMapping("/conversation/chat/{offerId}")
     public String getChat(@PathVariable Long offerId, Model model, Principal user){
-       String mail = user.getName();
-       User connected = usersService.getUserByEmail(mail);
-       Offer o = offersService.getOffer(offerId);
- Conversation c =conversationService.getConversation(o,connected);
+        String mail = user.getName();
+        User connected = usersService.getUserByEmail(mail);
+        Offer o = offersService.getOffer(offerId);
+        Conversation c =conversationService.getConversation(o,connected);
         if(c!=null){
-        model.addAttribute("user", connected);
-        model.addAttribute("messages", conversationService.getMessages(c));
-          model.addAttribute("offer", o);
+            model.addAttribute("user", connected);
+            model.addAttribute("messages", conversationService.getMessages(c));
+            model.addAttribute("offer", o);
             model.addAttribute("conversation", c);
-        return  "conversation/chat";}
-       return "a";
+            return  "conversation/chat";}
+        return "/home";
     }
+
+    /**
+     * Metodo que devuelve un chat en concreto
+     * @param offerId
+     * @param converId
+     * @param model
+     * @param user
+     * @return
+     */
     @RequestMapping("/conversation/chat/{offerId}/{converId}")
     public String getChat(@PathVariable Long offerId,@PathVariable Long converId, Model model, Principal user){
         String mail = user.getName();
@@ -55,14 +70,23 @@ public class ConversationController {
         Offer o = offersService.getOffer(offerId);
         Conversation c =conversationService.getConversation(converId,connected);
         if(c!=null){
-        model.addAttribute("user", connected);
-        model.addAttribute("messages", conversationService.getMessages(c));
+            model.addAttribute("user", connected);
+            model.addAttribute("messages", conversationService.getMessages(c));
             model.addAttribute("offer", o);
             model.addAttribute("conversation", c);
-        return  "conversation/chat";}
-        return "aa";
+            return  "conversation/chat";}
+        return "/home";
+
     }
 
+    /**
+     * Metodo que envia un mensaje
+     * @param idChat
+     * @param text
+     * @param model
+     * @param principal
+     * @return
+     */
     @RequestMapping(value = "/conversation/send/{idChat}", method = RequestMethod.POST)
     public String send(@PathVariable Long idChat, @RequestParam(name = "mensaje", required = true) String text,
                        Model model, Principal principal) {
@@ -70,29 +94,43 @@ public class ConversationController {
         User user = usersService.getUserByEmail(email);
         Conversation c = conversationService.getConversation(idChat);
 
-      User u = c.getOffer().getUser();
-      if(!text.isEmpty()){
-       conversationService.sendMessage(c, user, u, text);}
-         model.addAttribute("user", user);
-         model.addAttribute("messages", conversationService.getMessages(c));
+        User u = c.getOffer().getUser();
+        if(!text.isEmpty()){
+            conversationService.sendMessage(c, user, u, text);}
+        model.addAttribute("user", user);
+        model.addAttribute("messages", conversationService.getMessages(c));
 
         return "redirect:/conversation/chat/" +c.getOffer().getId()+"/" +c.getId();
     }
+
+    /**
+     * Metodo que muestra la lista de chats
+     * @param model
+     * @param p
+     * @return
+     */
     @RequestMapping("/conversation/list")
     public String getList(Model model,Principal p){
         String email = p.getName();
         User user = usersService.getUserByEmail(email);
         model.addAttribute("conversations", conversationService.getConversations(user));
-       return "/conversation/list";
+        return "/conversation/list";
     }
+
+    /**
+     * Metodo que borra un chat
+     * @param id
+     * @param p
+     * @return
+     */
     @RequestMapping("/conversation/delete/{id}")
     public String delete(@PathVariable Long id,Principal p) {
         String email = p.getName();
         User user = usersService.getUserByEmail(email);
-      Conversation a = conversationService.deleteConversation(id,user.getId());
-       if(a==null){
-           return "/convn/list";
-       }
+        Conversation a = conversationService.deleteConversation(id,user.getId());
+        if(a==null){
+            return "/convn/list";
+        }
         return "redirect:/conversation/list";
     }
 
