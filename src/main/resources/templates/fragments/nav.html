@@ -17,7 +17,7 @@
             <li id ="euros" sec:authorize="hasRole('ROLE_USER')"><span th:text="${session.euros}" class="navbar-text"></span></li>
             <li class="nav-item dropdown active" sec:authorize="hasRole('ROLE_USER')" >
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false" th:text="#{offers.offers}">
+                   aria-haspopup="true" aria-expanded="false" th:text="#{offers.management}">
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="/offer/list"th:text="#{offers.see}"></a>

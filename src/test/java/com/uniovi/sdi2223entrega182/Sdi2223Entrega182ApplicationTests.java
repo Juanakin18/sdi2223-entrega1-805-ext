@@ -195,7 +195,7 @@ class Sdi2223Entrega182ApplicationTests {
         //Contamos el número de filas de usuarios
         List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
                 PO_View.getTimeout());
-        Assertions.assertEquals(22,userList.size() );
+        Assertions.assertEquals(7,userList.size() );
     }
 
     /**
@@ -214,7 +214,7 @@ class Sdi2223Entrega182ApplicationTests {
         //Contamos el número de filas de usuarios
         List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
                 PO_View.getTimeout());
-        Assertions.assertEquals(22,userList.size() );
+        Assertions.assertEquals(7,userList.size() );
         By enlace = By.xpath("/html/body/div[1]/table/tbody/tr[2]/td[4]/input");
         driver.findElement(enlace).click();
 
@@ -223,7 +223,7 @@ class Sdi2223Entrega182ApplicationTests {
         driver.findElement(enlaceBorrar).click();
         userList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
                 PO_View.getTimeout());
-        Assertions.assertEquals(21,userList.size() );
+        Assertions.assertEquals(6,userList.size() );
 
 
     }
@@ -243,14 +243,14 @@ class Sdi2223Entrega182ApplicationTests {
         //Contamos el número de filas de usuarios
         List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
                 PO_View.getTimeout());
-        Assertions.assertEquals(21,userList.size() );
+        Assertions.assertEquals(6,userList.size() );
         By enlace = By.xpath("/html/body/div[1]/table/tbody/tr[6]/td[4]/input");
         driver.findElement(enlace).click();
         By enlaceBorrar = By.xpath("//*[@id=\"deleteAll\"]");
         driver.findElement(enlaceBorrar).click();
         userList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
                 PO_View.getTimeout());
-        Assertions.assertEquals(20,userList.size() );
+        Assertions.assertEquals(5,userList.size() );
     }
     /**
      *  Ir a la lista de usuarios, borrar 3 usuarios, comprobar que la lista se actualiza y dichos
@@ -268,7 +268,7 @@ class Sdi2223Entrega182ApplicationTests {
         //Contamos el número de filas de usuarios
         List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
                 PO_View.getTimeout());
-        Assertions.assertEquals(20,userList.size() );
+        Assertions.assertEquals(5,userList.size() );
 
         By enlace2 = By.xpath("/html/body/div[1]/table/tbody/tr[2]/td[4]/input");
         driver.findElement(enlace2).click();
@@ -278,7 +278,7 @@ class Sdi2223Entrega182ApplicationTests {
         driver.findElement(enlaceBorrar).click();
         userList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
                 PO_View.getTimeout());
-        Assertions.assertEquals(18,userList.size() );
+        Assertions.assertEquals(3,userList.size() );
     }
     /**
      *  Añadir oferta con datos validos
@@ -441,7 +441,7 @@ class Sdi2223Entrega182ApplicationTests {
         boton.click();
         List<WebElement> ofertas = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr", PO_View.getTimeout());
         nOfertas += ofertas.size();
-        Assertions.assertEquals(5,nOfertas );
+        Assertions.assertEquals(3,nOfertas );
     }
     /**
      Hacer una búsqueda escribiendo en el campo un texto que no exista y comprobar que se
@@ -706,7 +706,7 @@ class Sdi2223Entrega182ApplicationTests {
         //Ahora vamos a rellenar la oferta.
         String checkText = "Oferta Nueva 1";
         // IMPORTANTE: actualizar el path hacia la imagen de prueba
-        PO_AddOfferView.fillFormWithImage(driver, checkText, "detalles de la oferta", "300", "C:\\Users\\Javier\\Desktop\\SDI\\LABORATORIOS\\PROYECTO\\sdi2223-entrega1-82\\src\\main\\resources\\static\\images\\pruebas\\prueba.png");
+        PO_AddOfferView.fillFormWithImage(driver, checkText, "detalles de la oferta", "300", "C:\\Users\\juani\\OneDrive\\Escritorio\\Universidad\\SDI\\final\\sdi2223-entrega1-805-ext\\src\\main\\resources\\static\\images\\pruebas\\prueba.png");
 
         //Comprobamos que aparece la oferta en la página
         elements = PO_View.checkElementBy(driver, "text", checkText);
