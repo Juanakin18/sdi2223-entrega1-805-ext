@@ -12,12 +12,19 @@
     <artifactId>sdi2223-entrega1-82</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>sdi2223-entrega1-82</name>
-    <description>sdi2223-entrega1-82</description>
+    <name>sdi2223-entrega1-805-ext</name>
+    <description>sdi2223-entrega1-805-ext</description>
     <properties>
         <java.version>17</java.version>
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <scope>system</scope>
+            <version>3.141.59</version>
+            <systemPath>${basedir}/src/lib/selenium-server-standalone-3.141.59.jar</systemPath>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
