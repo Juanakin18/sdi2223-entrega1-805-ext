@@ -4,8 +4,8 @@
 <body>
 <nav th:replace="fragments/nav"></nav>
 <div class="container">
-    <h1>LOGS EN EL SISTEMA</h1>
-    <a th:href="${'/logs/delete/'}">Borrar todos</a>
+    <h1 th:text="#{logs.log}"></h1>
+    <a th:text="#{logs.delete}" th:href="${'/logs/delete/'}"></a>
     <div th:each="log : ${logslist}">
         <p>
             <span th:text="${log.type}"></span>
@@ -13,8 +13,8 @@
             <span th:text="${log.date}"></span>
         </p>
     </div>
-    <div th:if="${#lists.isEmpty(logslist)}">
-        No hay logs disponibles
+    <div th:if="${#lists.isEmpty(logslist)}" th:text="#{logs.none}">
+
     </div>
 </div>
 <footer th:replace="fragments/footer"></footer>

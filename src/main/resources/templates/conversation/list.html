@@ -22,9 +22,9 @@
             <td>
 
                 <a th:href="${'/conversation/chat/' + conversation.getOffer.id+'/'+conversation.id}"
-                >  conversación</a>
+                th:text = "#{conversation.conversation}">  </a>
                 <a th:href="${'/conversation/delete/'+conversation.id}"
-                >  borrar</a>
+                   th:text = "#{conversation.delete}">  </a>
 
 
             </td>

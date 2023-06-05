@@ -10,7 +10,7 @@
             <input name="searchText" type="text" class="form-control" size="50"
                    placeholder="Buscar por título">
         </div>
-        <button type="submit" class="btn btn-primary">Buscar</button>
+        <button id = "buscar" type="submit" class="btn btn-primary">Buscar</button>
     </form>
     <div class="table-responsive" th:fragment="tableOffers" id="tableOffers">
         <table class="table table-hover">
@@ -38,7 +38,7 @@
                 <td>
                     <div th:if="${offer.available}" >
                         <button  class="btn btn-primary" >
-                           <a  th:href="${'/home/buy/' + offer.id}"><span th:text="#{offers.buy}"></span></a>
+                            <a  th:href="${'/home/buy/' + offer.id}"><span th:text="#{offers.buy}"></span></a>
                         </button>
                     </div>
                     <div th:unless="${offer.available}">
@@ -48,8 +48,8 @@
 
                 <td>
 
-                    <a th:href="${'/conversation/chat/' + offer.id}"
-                       >  conversación</a>
+                    <a th:href="${'/conversation/chat/' + offer.id}" th:text ="#{conversation.conversation}"
+                    >  </a>
 
                 </td>
             </tr>

@@ -24,13 +24,13 @@
         <td scope="row" th:text="${offer.title}"> 1</td>
         <td th:text="${offer.details}"> Ejercicio 1</td>
         <td th:text="${offer.amount}">10</td>
-        <td><a th:href="${'/offer/delete/' + offer.id}">Eliminar</a></td>
+        <td><a th:href="${'/offer/delete/' + offer.id}" th:text="#{eliminar}"></a></td>
 
       </tr>
       </tbody>
     </table>
-    <div th:if="${#lists.isEmpty(offersList)}">
-      No hay ofertas
+    <div th:if="${#lists.isEmpty(offersList)}" th:text="#{offers.none}">
+
     </div>
   </div>
   </table>
