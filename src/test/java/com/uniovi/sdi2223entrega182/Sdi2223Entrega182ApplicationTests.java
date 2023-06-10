@@ -475,7 +475,23 @@ class Sdi2223Entrega182ApplicationTests {
     @Test
     @Order(22)
     void PR22(){
-        //TODO
+        int nOfertas = 0;
+        // Vamos al formulario de inicio de sesión
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+
+        // Rellenamos el formulario.
+        PO_LoginView.fillLoginForm(driver, "mariobalotelli@uniovi.es", "123456");
+        By enlace = By.xpath("//*[@id=\"home1\"]");
+        driver.findElement(enlace).click();
+        // Pinchamos en la opción de Gestión de ofertas
+        WebElement search = driver.findElement(By.name("searchText"));
+        search.sendKeys("ofertaPositivo");
+        WebElement boton = driver.findElement(By.id("buscar"));
+        boton.click();
+        WebElement search1 = driver.findElement(By.name("searchText"));
+         String checkText = "80€";
+        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText , result.get(0).getText());
     }
     /**
      *[Prueba23] Sobre una búsqueda determinada (a elección del desarrollador), comprar una oferta que deja
@@ -485,7 +501,23 @@ class Sdi2223Entrega182ApplicationTests {
     @Test
     @Order(23)
     void PR23(){
-        //TODO
+        int nOfertas = 0;
+        // Vamos al formulario de inicio de sesión
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+
+        // Rellenamos el formulario.
+        PO_LoginView.fillLoginForm(driver, "mariobalotelli@uniovi.es", "123456");
+        By enlace = By.xpath("//*[@id=\"home1\"]");
+        driver.findElement(enlace).click();
+        // Pinchamos en la opción de Gestión de ofertas
+        WebElement search = driver.findElement(By.name("searchText"));
+        search.sendKeys("ofertaPositivo");
+        WebElement boton = driver.findElement(By.id("buscar"));
+        boton.click();
+        WebElement search1 = driver.findElement(By.name("searchText"));
+        String checkText = "0€";
+        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText , result.get(0).getText());
     }
     /**
      *[Prueba24] Sobre una búsqueda determinada (a elección del desarrollador), intentar comprar una oferta
@@ -495,7 +527,23 @@ class Sdi2223Entrega182ApplicationTests {
     @Test
     @Order(24)
     void PR24(){
-        //TODO
+        int nOfertas = 0;
+        // Vamos al formulario de inicio de sesión
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+
+        // Rellenamos el formulario.
+        PO_LoginView.fillLoginForm(driver, "mariobalotelli@uniovi.es", "123456");
+        By enlace = By.xpath("//*[@id=\"home1\"]");
+        driver.findElement(enlace).click();
+        // Pinchamos en la opción de Gestión de ofertas
+        WebElement search = driver.findElement(By.name("searchText"));
+        search.sendKeys("ofertaPositivo");
+        WebElement boton = driver.findElement(By.id("buscar"));
+        boton.click();
+        WebElement search1 = driver.findElement(By.name("searchText"));
+        String checkText = "Saldo insuficiente";
+        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText , result.get(0).getText());
     }
     /**
      *[Prueba25] Ir a la opción de ofertas compradas del usuario y mostrar la lista. Comprobar que aparecen
@@ -504,7 +552,23 @@ class Sdi2223Entrega182ApplicationTests {
     @Test
     @Order(25)
     void PR25(){
-        //TODO
+        int nOfertas = 0;
+        // Vamos al formulario de inicio de sesión
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+
+        // Rellenamos el formulario.
+        PO_LoginView.fillLoginForm(driver, "mariobalotelli@uniovi.es", "123456");
+        By enlace = By.xpath("//*[@id=\"home1\"]");
+        driver.findElement(enlace).click();
+        // Pinchamos en la opción de Gestión de ofertas
+        WebElement search = driver.findElement(By.name("searchText"));
+        search.sendKeys("ofertaPositivo");
+        WebElement boton = driver.findElement(By.id("buscar"));
+        boton.click();
+        WebElement search1 = driver.findElement(By.name("searchText"));
+        String checkText = "0€";
+        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText , result.get(0).getText());
     }
 
     /**
@@ -580,13 +644,18 @@ class Sdi2223Entrega182ApplicationTests {
     }
 
     /**
-     * Internacionalización
+     * [Prueba29] Visualizar al menos cuatro páginas en español/inglés/español (comprobando que algunas de
+     * las etiquetas cambian al idioma correspondiente). Ejemplo, Página principal/Opciones Principales de
+     * Usuario/Listado de Usuarios
      */
     @Test
     @Order(29)
     void PR29(){
         PO_HomeView.checkElementBy(driver, "text", "Home");
 
+        String checkText = "Saldo insuficiente";
+        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText , result.get(0).getText());
 
     }
 
