@@ -31,6 +31,12 @@ public class ConversationServices {
     private MessageRepository messageRepository;
     private static final Logger logger = LoggerFactory.getLogger(SecurityService.class);
 
+    /**
+     * Devuelve la conversación del usuario actual
+     * @param offer La oferta
+     * @param actualUser El usuario
+     * @return La conversación
+     */
     public Conversation getConversation(Offer offer, User actualUser) {
         Conversation c = conversationsRepository.findByOfferAndUsers( actualUser,offer);
         if (c == null) {
@@ -51,10 +57,20 @@ public class ConversationServices {
         return c;
     }
 
+    /**
+     * Devuelve los mensajes
+     * @param c La conversación
+     * @return Los mensajes
+     */
     public List<Message> getMessages(Conversation c) {
         return messageRepository.findMessages(c);
     }
 
+    /**
+     * Devuelve la conversación concreta
+     * @param idConversation La conversación
+     * @return La conversación
+     */
     public Conversation getConversation(Long idConversation) {
 
        Conversation c =  conversationsRepository.findById(idConversation).get();
@@ -66,6 +82,13 @@ public class ConversationServices {
         return c;
 
     }
+
+    /**
+     * Devuelve la conversación
+     * @param idConversation id
+     * @param u usuario
+     * @return Conversación
+     */
     public Conversation getConversation(Long idConversation,User u) {
 
         Conversation c =  conversationsRepository.findById(idConversation).get();
@@ -81,16 +104,34 @@ public class ConversationServices {
 
     }
 
+    /**
+     * Devuelve la lista de conversaciones
+     * @param u Usuario
+     * @return Lista
+     */
     public List<Conversation> getConversations(User u) {
         return conversationsRepository.findByUser(u);
     }
 
+    /**
+     * Envía un mensaje
+     * @param c Conversación
+     * @param actualUser Usuario
+     * @param to Receptor
+     * @param text Mensaje
+     */
     @Transactional
     public void sendMessage(Conversation c, User actualUser, User to, String text) {
         messageRepository.save(new Message(new Date(), text, c, actualUser, to));
         logger.info(String.format("message sended"));
     }
 
+    /**
+     * Borra una conversación
+     * @param id Id
+     * @param idUser Usuario
+     * @return Conversación
+     */
     public Conversation deleteConversation(Long id, Long idUser) {
         Conversation c = conversationsRepository.findByUserAndId(id, idUser);
         if (c != null) {

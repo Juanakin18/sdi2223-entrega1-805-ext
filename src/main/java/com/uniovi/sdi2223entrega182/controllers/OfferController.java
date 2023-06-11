@@ -54,6 +54,11 @@ public class OfferController {
 
     private static final Logger logger = LoggerFactory.getLogger(SecurityService.class);
 
+    /**
+     * Método que renderiza la lista de ofertas
+     * @param model Modelo
+     * @return La vista
+     */
     @RequestMapping("/offer/list")
     public String getList(Model model){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -66,6 +71,11 @@ public class OfferController {
         return "/offer/list";
     }
 
+    /**
+     * Método que añade una oferta
+     * @param model Modelo
+     * @return La vista
+     */
     @RequestMapping(value = "/offer/add")
     public String getOffer(Model model) {
         model.addAttribute("offer", new Offer());
@@ -78,11 +88,13 @@ public class OfferController {
         return "offer/details";
     }
 
-    @RequestMapping(value = "/offer/edit/{id}")
-    public String editOffer(Model model, @PathVariable Long id) {
-        model.addAttribute("offer",offersService.getOffer(id));
-        return "offer/edit";
-    }
+
+    /**
+     * Método para comprar
+     * @param model Model
+     * @param id Artículo a comprar
+     * @return La vista
+     */
     @RequestMapping(value = {"/home/buy/{id}"}, method = RequestMethod.GET)
     public String homeBuy(Model model, @PathVariable Long id) {
         User activeUser = usersService.getUser();
@@ -103,6 +115,14 @@ public class OfferController {
 
         return "redirect:/home";
     }
+
+    /**
+     * Establece una oferta
+     * @param offer Oferta
+     * @param image Imagen
+     * @param result Resultado
+     * @return vista
+     */
 
     @RequestMapping(value = "/offer/add", method = RequestMethod.POST)
     public String setOffer(@Validated Offer offer, @RequestParam("file") MultipartFile image, BindingResult result) {
@@ -133,6 +153,11 @@ public class OfferController {
     }
 
 
+    /**
+     * Borra una oferta
+     * @param id La oferta a borrar
+     * @return Redirige a la lista de ofertas
+     */
     @RequestMapping("/offer/delete/{id}")
     public String deleteOffer(@PathVariable Long id){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -142,6 +167,12 @@ public class OfferController {
             offersService.deleteOffer(id);
         return "redirect:/offer/list";
     }
+
+    /**
+     * Devuelve la lista de comprados
+     * @param model Modelo
+     * @return Vista de todos los artículos comprados
+     */
     @RequestMapping("/offer/bought")
     public String getListBought(Model model){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
