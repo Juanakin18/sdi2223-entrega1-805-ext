@@ -195,7 +195,7 @@ class Sdi2223Entrega182ApplicationTests {
         //Contamos el número de filas de usuarios
         List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
                 PO_View.getTimeout());
-        Assertions.assertEquals(7,userList.size() );
+        Assertions.assertEquals(10,userList.size() );
     }
 
     /**
@@ -214,7 +214,7 @@ class Sdi2223Entrega182ApplicationTests {
         //Contamos el número de filas de usuarios
         List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
                 PO_View.getTimeout());
-        Assertions.assertEquals(7,userList.size() );
+        Assertions.assertEquals(10,userList.size() );
         By enlace = By.xpath("/html/body/div[1]/table/tbody/tr[2]/td[4]/input");
         driver.findElement(enlace).click();
 
@@ -223,7 +223,7 @@ class Sdi2223Entrega182ApplicationTests {
         driver.findElement(enlaceBorrar).click();
         userList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
                 PO_View.getTimeout());
-        Assertions.assertEquals(6,userList.size() );
+        Assertions.assertEquals(9,userList.size() );
 
 
     }
@@ -243,14 +243,14 @@ class Sdi2223Entrega182ApplicationTests {
         //Contamos el número de filas de usuarios
         List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
                 PO_View.getTimeout());
-        Assertions.assertEquals(6,userList.size() );
+        Assertions.assertEquals(9,userList.size() );
         By enlace = By.xpath("/html/body/div[1]/table/tbody/tr[6]/td[4]/input");
         driver.findElement(enlace).click();
         By enlaceBorrar = By.xpath("//*[@id=\"deleteAll\"]");
         driver.findElement(enlaceBorrar).click();
         userList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
                 PO_View.getTimeout());
-        Assertions.assertEquals(5,userList.size() );
+        Assertions.assertEquals(8,userList.size() );
     }
     /**
      *  Ir a la lista de usuarios, borrar 3 usuarios, comprobar que la lista se actualiza y dichos
@@ -268,7 +268,7 @@ class Sdi2223Entrega182ApplicationTests {
         //Contamos el número de filas de usuarios
         List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
                 PO_View.getTimeout());
-        Assertions.assertEquals(5,userList.size() );
+        Assertions.assertEquals(8,userList.size() );
 
         By enlace2 = By.xpath("/html/body/div[1]/table/tbody/tr[2]/td[4]/input");
         driver.findElement(enlace2).click();
@@ -278,7 +278,7 @@ class Sdi2223Entrega182ApplicationTests {
         driver.findElement(enlaceBorrar).click();
         userList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
                 PO_View.getTimeout());
-        Assertions.assertEquals(3,userList.size() );
+        Assertions.assertEquals(6,userList.size() );
     }
     /**
      *  Añadir oferta con datos validos
@@ -441,7 +441,7 @@ class Sdi2223Entrega182ApplicationTests {
         boton.click();
         List<WebElement> ofertas = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr", PO_View.getTimeout());
         nOfertas += ofertas.size();
-        Assertions.assertEquals(3,nOfertas );
+        Assertions.assertEquals(5,nOfertas );
     }
     /**
      Hacer una búsqueda escribiendo en el campo un texto que no exista y comprobar que se
@@ -475,21 +475,25 @@ class Sdi2223Entrega182ApplicationTests {
     @Test
     @Order(22)
     void PR22(){
-        int nOfertas = 0;
+
+        addOffer("cristianoronaldo@uniovi.es", "123456","ofertaSaldoPositivo","10");
         // Vamos al formulario de inicio de sesión
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 
+
         // Rellenamos el formulario.
         PO_LoginView.fillLoginForm(driver, "mariobalotelli@uniovi.es", "123456");
-        By enlace = By.xpath("//*[@id=\"home1\"]");
+        By enlace = By.xpath("/html/body/nav/div/ul[1]/li[1]");
         driver.findElement(enlace).click();
         // Pinchamos en la opción de Gestión de ofertas
         WebElement search = driver.findElement(By.name("searchText"));
-        search.sendKeys("ofertaPositivo");
+        search.sendKeys("ofertaSaldoPositivo");
         WebElement boton = driver.findElement(By.id("buscar"));
         boton.click();
+        enlace = By.xpath("//*[@id=\"tableOffers\"]/table/tbody/tr/td[6]/div/button/a");
+        driver.findElement(enlace).click();
         WebElement search1 = driver.findElement(By.name("searchText"));
-         String checkText = "80€";
+        String checkText = "Dinero disponible:90.0";
         List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
         Assertions.assertEquals(checkText , result.get(0).getText());
     }
@@ -501,21 +505,25 @@ class Sdi2223Entrega182ApplicationTests {
     @Test
     @Order(23)
     void PR23(){
-        int nOfertas = 0;
+        addOffer("upamencano@uniovi.es", "123456","ofertaSaldoCero","100");
+        //Ahora nos desconectamos y comprobamos que aparece el menú de registrarse
+        driver.manage().deleteAllCookies();
         // Vamos al formulario de inicio de sesión
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 
         // Rellenamos el formulario.
-        PO_LoginView.fillLoginForm(driver, "mariobalotelli@uniovi.es", "123456");
+        PO_LoginView.fillLoginForm(driver, "cristianoronaldo@uniovi.es", "123456");
         By enlace = By.xpath("//*[@id=\"home1\"]");
         driver.findElement(enlace).click();
         // Pinchamos en la opción de Gestión de ofertas
         WebElement search = driver.findElement(By.name("searchText"));
-        search.sendKeys("ofertaPositivo");
+        search.sendKeys("ofertaSaldoCero");
         WebElement boton = driver.findElement(By.id("buscar"));
         boton.click();
+        enlace = By.xpath("//*[@id=\"tableOffers\"]/table/tbody/tr/td[6]/div/button/a");
+        driver.findElement(enlace).click();
         WebElement search1 = driver.findElement(By.name("searchText"));
-        String checkText = "0€";
+        String checkText = "Dinero disponible:0.0";
         List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
         Assertions.assertEquals(checkText , result.get(0).getText());
     }
@@ -527,21 +535,23 @@ class Sdi2223Entrega182ApplicationTests {
     @Test
     @Order(24)
     void PR24(){
-        int nOfertas = 0;
+        addOffer("upamencano@uniovi.es", "123456","ofertaInsuficiente","110");
         // Vamos al formulario de inicio de sesión
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 
         // Rellenamos el formulario.
-        PO_LoginView.fillLoginForm(driver, "mariobalotelli@uniovi.es", "123456");
+        PO_LoginView.fillLoginForm(driver, "pepe@email.com", "77777");
         By enlace = By.xpath("//*[@id=\"home1\"]");
         driver.findElement(enlace).click();
         // Pinchamos en la opción de Gestión de ofertas
         WebElement search = driver.findElement(By.name("searchText"));
-        search.sendKeys("ofertaPositivo");
+        search.sendKeys("ofertaInsuficiente");
         WebElement boton = driver.findElement(By.id("buscar"));
         boton.click();
+        enlace = By.xpath("//*[@id=\"tableOffers\"]/table/tbody/tr/td[6]/div/button/a");
+        driver.findElement(enlace).click();
         WebElement search1 = driver.findElement(By.name("searchText"));
-        String checkText = "Saldo insuficiente";
+        String checkText = "No tienes suficiente dinero para esa oferta";
         List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
         Assertions.assertEquals(checkText , result.get(0).getText());
     }
@@ -557,19 +567,12 @@ class Sdi2223Entrega182ApplicationTests {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 
         // Rellenamos el formulario.
-        PO_LoginView.fillLoginForm(driver, "mariobalotelli@uniovi.es", "123456");
+        PO_LoginView.fillLoginForm(driver, "pepe@email.com", "77777");
         By enlace = By.xpath("//*[@id=\"home1\"]");
-        driver.findElement(enlace).click();
-        // Pinchamos en la opción de Gestión de ofertas
-        WebElement search = driver.findElement(By.name("searchText"));
-        search.sendKeys("ofertaPositivo");
-        WebElement boton = driver.findElement(By.id("buscar"));
-        boton.click();
-        WebElement search1 = driver.findElement(By.name("searchText"));
-        String checkText = "0€";
+        String checkText = "No hay ofertas";
         List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
         Assertions.assertEquals(checkText , result.get(0).getText());
-    }
+        }
 
     /**
      * [Prueba26] Sobre una búsqueda determinada de ofertas (a elección de desarrollador), enviar un mensaje
@@ -653,9 +656,116 @@ class Sdi2223Entrega182ApplicationTests {
     void PR29(){
         PO_HomeView.checkElementBy(driver, "text", "Home");
 
-        String checkText = "Saldo insuficiente";
-        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "djuka@uniovi.es", "123456");
+
+        String checkText = "Título";
+        List<WebElement>  result = PO_View.checkElementBy(driver, "text", checkText);
         Assertions.assertEquals(checkText , result.get(0).getText());
+        By enlace = By.xpath("//*[@id=\"btnLanguage\"]");
+        driver.findElement(enlace).click();
+        enlace = By.xpath("//*[@id=\"btnEnglish\"]");
+        driver.findElement(enlace).click();
+        checkText = "Title";
+        result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText , result.get(0).getText());
+        enlace = By.xpath("//*[@id=\"myNavbar\"]/ul[4]/li[1]");
+        driver.findElement(enlace).click();
+        enlace = By.xpath("//*[@id=\"btnSpanish\"]");
+        driver.findElement(enlace).click();
+        checkText = "Título";
+        result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText , result.get(0).getText());
+        //Home
+        checkText= "Gestión de Ofertas";
+        result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText , result.get(0).getText());
+        enlace = By.xpath("//*[@id=\"myNavbar\"]/ul[4]/li[1]");
+        driver.findElement(enlace).click();
+        enlace = By.xpath("//*[@id=\"btnEnglish\"]");
+        driver.findElement(enlace).click();
+        checkText = "Offers Management";
+        result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText , result.get(0).getText());
+        enlace = By.xpath("//*[@id=\"myNavbar\"]/ul[4]/li[1]");
+        driver.findElement(enlace).click();
+        enlace = By.xpath("//*[@id=\"btnSpanish\"]");
+        driver.findElement(enlace).click();
+        checkText = "Gestión de Ofertas";
+        result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText , result.get(0).getText());
+
+
+        //Conversaciones
+        enlace = By.xpath("/html/body/nav/div/ul[1]/li[7]/a");
+        driver.findElement(enlace).click();
+        enlace = By.xpath("//*[@id=\"myNavbar\"]/ul[1]/li[7]/div/a");
+        driver.findElement(enlace).click();
+        checkText = "correo";
+        result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText , result.get(0).getText());
+        enlace = By.xpath("//*[@id=\"myNavbar\"]/ul[4]/li[1]");
+        driver.findElement(enlace).click();
+        enlace = By.xpath("//*[@id=\"btnEnglish\"]");
+        driver.findElement(enlace).click();
+        checkText = "email";
+        result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText , result.get(0).getText());
+        enlace = By.xpath("//*[@id=\"myNavbar\"]/ul[4]/li[1]");
+        driver.findElement(enlace).click();
+        enlace = By.xpath("//*[@id=\"btnSpanish\"]");
+        driver.findElement(enlace).click();
+        checkText = "correo";
+        result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText , result.get(0).getText());
+
+        //Agregar oferta
+         enlace = By.xpath("/html/body/nav/div/ul[1]/li[6]/a");
+        driver.findElement(enlace).click();
+        //*[@id="myNavbar"]/ul[1]/li[6]/div/a[3]
+        enlace = By.xpath("//*[@id=\"myNavbar\"]/ul[1]/li[6]/div/a[3]");
+        driver.findElement(enlace).click();
+        checkText = "Título";
+        result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText , result.get(0).getText());
+        enlace = By.xpath("//*[@id=\"myNavbar\"]/ul[4]/li[1]");
+        driver.findElement(enlace).click();
+        enlace = By.xpath("//*[@id=\"btnEnglish\"]");
+        driver.findElement(enlace).click();
+        checkText = "Title";
+        result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText , result.get(0).getText());
+        enlace = By.xpath("//*[@id=\"myNavbar\"]/ul[4]/li[1]");
+        driver.findElement(enlace).click();
+        enlace = By.xpath("//*[@id=\"btnSpanish\"]");
+        driver.findElement(enlace).click();
+        checkText = "Título";
+        result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText , result.get(0).getText());
+
+        //Admin
+        PO_PrivateView.clickOption(driver, "logout", "class", "btn btn-primary");
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, "admin@email.com", "admin");
+         checkText = "Nombre";
+          result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText , result.get(0).getText());
+         enlace = By.xpath("//*[@id=\"btnLanguage\"]");
+        driver.findElement(enlace).click();
+        enlace = By.xpath("//*[@id=\"btnEnglish\"]");
+        driver.findElement(enlace).click();
+        checkText = "Name";
+        result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText , result.get(0).getText());
+        enlace = By.xpath("//*[@id=\"myNavbar\"]/ul[4]/li[1]");
+        driver.findElement(enlace).click();
+        enlace = By.xpath("//*[@id=\"btnSpanish\"]");
+        driver.findElement(enlace).click();
+        checkText = "Nombre";
+        result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText , result.get(0).getText());
+        //*[@id="bgh"]
+
 
     }
 
@@ -761,9 +871,9 @@ class Sdi2223Entrega182ApplicationTests {
     @Order(40)
     void PR40() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "mariobalotelli@uniovi.es", "123456");
+        PO_LoginView.fillLoginForm(driver, "djuka@uniovi.es", "123456");
         //Cmmprobamos que entramos en la pagina privada del usuario
-        PO_View.checkElementBy(driver, "text", "mariobalotelli@uniovi.es");
+        PO_View.checkElementBy(driver, "text", "djuka@uniovi.es");
         //Pinchamos en la opción de menú de ofertas:
         List<WebElement> elements = PO_View.checkElementBy(driver, "free", "/html/body/nav/div/ul[1]/li[6]");
         elements.get(0).click();
@@ -793,9 +903,9 @@ class Sdi2223Entrega182ApplicationTests {
     @Order(41)
     void PR41() {
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-        PO_LoginView.fillLoginForm(driver, "mariobalotelli@uniovi.es", "123456");
+        PO_LoginView.fillLoginForm(driver, "djuka@uniovi.es", "123456");
         //Cmmprobamos que entramos en la pagina privada del usuario
-        PO_View.checkElementBy(driver, "text", "mariobalotelli@uniovi.es");
+        PO_View.checkElementBy(driver, "text", "djuka@uniovi.es");
         //Pinchamos en la opción de menú de ofertas:
         List<WebElement> elements = PO_View.checkElementBy(driver, "free", "/html/body/nav/div/ul[1]/li[6]");
         elements.get(0).click();
@@ -813,11 +923,35 @@ class Sdi2223Entrega182ApplicationTests {
         Assertions.assertEquals(checkText, elements.get(0).getText());
         //Comprobamos que el numero de imagenes por defecto es 4
         elements = PO_View.checkElementBy(driver, "free", "//img[contains(@alt, 'default-image.png')]");
-        Assertions.assertEquals(elements.size(), 4);
+        Assertions.assertEquals(elements.size(), 1);
         //Ahora nos desconectamos y comprobamos que aparece el menú de registrarse
         PO_PrivateView.clickOption(driver, "logout", "class", "btn btn-primary");
     }
 
 
+    public void addOffer(String email, String contrasena, String nombre, String precio){
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, email, contrasena);
+        //Cmmprobamos que entramos en la pagina privada del usuario
+        PO_View.checkElementBy(driver, "text", email);
+        //Pinchamos en la opción de menú de ofertas:
+        List<WebElement> elements = PO_View.checkElementBy(driver, "free", "/html/body/nav/div/ul[1]/li[6]");
+        elements.get(0).click();
+        //Esperamos a que aparezca la opción de añadir nota: //a[contains(@href, 'mark/add')]
+        elements = PO_View.checkElementBy(driver, "free", "//a[contains(@href, 'offer/add')]");
+        //Pinchamos en agregar Nota.
+        elements.get(0).click();
+
+        //Ahora vamos a rellenar la nota. //option[contains(@value, '4')]
+        String checkText = nombre;
+        PO_AddOfferView.fillForm(driver, checkText, "detalles de la oferta", precio);
+
+        //Comprobamos que aparece la oferta en la página
+        elements = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, elements.get(0).getText());
+        //Ahora nos desconectamos y comprobamos que aparece el menú de registrarse
+        PO_PrivateView.clickOption(driver, "logout", "class", "btn btn-primary");
+        driver.manage().deleteAllCookies();
+    }
 
 }

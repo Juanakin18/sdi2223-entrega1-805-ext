@@ -5,6 +5,9 @@
 <nav th:replace="fragments/nav"></nav>
 <div>
     <h2> <span th:text="#{offers.offers}"></span></h2>
+    <div th:if="${!enoughMoney}">
+        <p th:text="#{offers.notEnough}"></p>
+    </div>
     <form class="form-inline" action="/home">
         <div class="form-group">
             <input name="searchText" type="text" class="form-control" size="50"
@@ -30,10 +33,10 @@
             <tbody>
             <tr th:each="offer : ${offerList}">
                 <td scope="row"><img class="img-thumbnail rounded float-left" th:src="@{'/images/' + ${offer.image}}" th:alt="${offer.image}" /></td>
-                <td scope="row" th:text="${offer.title}">Título</td>
-                <td scope="row" th:text="${offer.description}">Descripcion</td>
-                <td scope="row" th:text="${offer.details}">Detalles</td>
-                <td scope="row" th:text="${offer.amount}">Detalles</td>
+                <td scope="row" th:text="${offer.title}"></td>
+                <td scope="row" th:text="${offer.description}"></td>
+                <td scope="row" th:text="${offer.details}"></td>
+                <td scope="row" th:text="${offer.amount}"></td>
 
                 <td>
                     <div th:if="${offer.available}" >

@@ -43,7 +43,7 @@ public class UsersController {
      *         destacada
      */
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public String signup(@Validated User user, BindingResult result) {
+    public String signup(Model model, @Validated User user, BindingResult result) {
         signUpFormValidator.validate(user, result);
         if (result.hasErrors()) {
             return "signup";
@@ -53,6 +53,7 @@ public class UsersController {
         usersService.addUser(user);
 
         securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());
+        model.addAttribute("enoughMoney", true);
         return "redirect:home";
     }
     /**
@@ -64,6 +65,7 @@ public class UsersController {
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
     public String signup(Model model) {
         if (usersService.getUser() != null){
+            model.addAttribute("enoughMoney", true);
             return "redirect:/home";
         }else{
             model.addAttribute("user", new User());
@@ -78,8 +80,9 @@ public class UsersController {
      * @return la vista para cubrir el formulario de log in
      */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login() {
+    public String login(Model model) {
         if (usersService.getUser() != null){
+            model.addAttribute("enoughMoney", true);
             return "redirect:/home";
         }else{
             return "login";

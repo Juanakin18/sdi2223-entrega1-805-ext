@@ -29,6 +29,18 @@ public class InsertSampleDataService {
         User user1 = new User("mariobalotelli@uniovi.es", "Mario", "Balotelli");
         user1.setPassword("123456");
         user1.setRole(rolesService.getRoles()[1]);
+        User user10 = new User("mariobalotelli2@uniovi.es", "Mario", "Balotelli");
+        user10.setPassword("123456");
+        user10.setRole(rolesService.getRoles()[1]);
+        user10.setMoney(100);
+        User user11 = new User("mariobalotelli3@uniovi.es", "Mario", "Balotelli");
+        user11.setPassword("123456");
+        user11.setRole(rolesService.getRoles()[1]);
+        user11.setMoney(100);
+        User user111 = new User("mariobalotelli4@uniovi.es", "Mario", "Balotelli");
+        user111.setPassword("123456");
+        user111.setRole(rolesService.getRoles()[1]);
+        user111.setMoney(100);
         user1.setMoney(100d);
         User user2 = new User("leomessi@uniovi.es", "Leo", "Messi");
         user2.setPassword("123456");
@@ -90,9 +102,12 @@ public class InsertSampleDataService {
         user4.setOffers(user4Offers);
 
         usersService.addUser(user1);
+        usersService.addUser(user10);
+        usersService.addUser(user11);
         usersService.addUser(user2);
         usersService.addUser(user3);
         usersService.addUser(user4);
+        usersService.addUser(user111);
         usersService.addUser(user5);
         usersService.addUser(user6);
     }

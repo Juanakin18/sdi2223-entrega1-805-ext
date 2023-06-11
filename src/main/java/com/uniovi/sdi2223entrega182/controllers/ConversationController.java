@@ -52,6 +52,7 @@ public class ConversationController {
             model.addAttribute("offer", o);
             model.addAttribute("conversation", c);
             return  "conversation/chat";}
+        model.addAttribute("enoughMoney", true);
         return "/home";
     }
 
@@ -75,6 +76,7 @@ public class ConversationController {
             model.addAttribute("offer", o);
             model.addAttribute("conversation", c);
             return  "conversation/chat";}
+        model.addAttribute("enoughMoney", true);
         return "/home";
 
     }

@@ -13,7 +13,7 @@
                 <a id="listaUsuarios" class="nav-link" href="/admin/userList" sec:authorize="hasRole('ROLE_ADMIN')" th:text="#{admin.userList}"><span class="sr-only">(current)</span></a>
             </li>
             <li><span sec:authorize="isAuthenticated()" th:text="${session.email}"class="navbar-text"></span>&ensp;</li>
-            <li id ="money" sec:authorize="hasRole('ROLE_USER')"><span th:text="${session.money}" class="navbar-text"></span></li>
+            <li id ="money" sec:authorize="hasRole('ROLE_USER')"><span th:text="#{user.money}+${session.money}" class="navbar-text"></span></li>
             <li id ="euros" sec:authorize="hasRole('ROLE_USER')"><span th:text="${session.euros}" class="navbar-text"></span></li>
             <li class="nav-item dropdown active" sec:authorize="hasRole('ROLE_USER')" >
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.Set;
 
@@ -36,6 +37,8 @@ public class HomeController {
     @Autowired
     private LogService logService;
 
+    @Autowired
+    private HttpSession httpSession;
     private boolean loggin = false;
 
     private static final Logger logger = LoggerFactory.getLogger(SecurityService.class);
@@ -76,6 +79,10 @@ public class HomeController {
         Log log = new Log("PET","HOME CONTROLLER HOME", new Date());
         logService.addLog(log);
 
+        if(httpSession.getAttribute("enoughMoney")==null)
+            model.addAttribute("enoughMoney", true);
+        else
+            model.addAttribute("enoughMoney", httpSession.getAttribute("enoughMoney"));
         return "home";
     }
 
