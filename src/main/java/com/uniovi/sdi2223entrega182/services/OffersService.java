@@ -24,41 +24,71 @@ public class OffersService {
 
     private static final Logger logger = LoggerFactory.getLogger(SecurityService.class);
 
+    /**
+     * Devuelve todas las ofertas
+     * @return Las ofertas
+     */
     public List<Offer> getOffers() {
         List<Offer> offers = new ArrayList<Offer>();
         offersRepository.findAll().forEach(offers::add);
         return offers;
     }
+
+    /**
+     * Devuelve una oferta
+     * @param id El id
+     * @return La oferta
+     */
     public Offer getOffer(Long id) {
         return offersRepository.findById(id).get();
     }
+
+    /**
+     * Añade una oferta
+     * @param offer La oferta
+     */
     public void addOffer(Offer offer) {
         // Si en Id es null le asignamos el ultimo + 1 de la lista
         offersRepository.save(offer);
         logger.info(String.format("Offer %s added", offer.getTitle()));
     }
-    public void updateOffer(Offer offer) {
-        // Si en Id es null le asignamos el ultimo + 1 de la lista
 
-        offersRepository.save(offer);
 
-    }
+    /**
+     * Borra una oferta
+     * @param id La oferta
+     */
     public void deleteOffer(Long id) {
         offersRepository.deleteById(id);
         logger.info(String.format("Offer %s deleted" + "offer id: ", id.toString()));
     }
 
+    /**
+     * Busca ofertas
+     * @param pageable Pageable
+     * @param searchText Texto a buscar
+     * @return Las ofertas
+     */
     public Page<Offer> searchOffersByTitle(Pageable pageable, String searchText) {
         searchText ="%"+searchText+"%";
         Page<Offer> users  = offersRepository.searchByNameAndLastName(pageable, searchText);
         return users;
     }
-
+    /**
+     * Busca ofertas
+     * @param pageable Pageable
+     * @return Las ofertas
+     */
     public Page<Offer> getOffers(Pageable pageable) {
         Page<Offer> list = offersRepository.findAll(pageable);
         return list;
     }
 
+    /**
+     * Añade una imagen
+     * @param image La imagen
+     * @throws IOException Excepción
+     */
     public void addImage(MultipartFile image) throws IOException {
         Path directorioImagenes = Paths.get("src//main//resources//static/images");
         String absolutePath = directorioImagenes.toFile().getAbsolutePath();
@@ -66,6 +96,12 @@ public class OffersService {
         Path completePath = Paths.get(absolutePath + "//" + image.getOriginalFilename());
         Files.write(completePath, bytesImg);
     }
+    /**
+     * Busca ofertas
+     * @param pageable Pageable
+     * @param searchText Texto a buscar
+     * @return Las ofertas
+     */
     public Page<Offer> getPageOffers(Pageable pageable, String searchText ){
         Page<Offer> offers;
         if(searchText != null && !searchText.isEmpty()){
@@ -76,6 +112,11 @@ public class OffersService {
         return offers;
     }
 
+    /**
+     * Actualiza el usuario
+     * @param activeUser Usuario
+     * @param offer La oferta
+     */
     public void updateOfferUser(User activeUser, Offer offer) {
         activeUser.setMoney(activeUser.getMoney() - offer.getAmount());
         offer.setBuyer(activeUser);

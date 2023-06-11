@@ -35,12 +35,20 @@ public class LogService {
         return list;
     }
 
+    /**
+     * Devuelve una lista de logs
+     * @return La lista
+     */
+
     public List<Log> getLogs() {
         List<Log> logs = new ArrayList<Log>();
         repository.findAll().forEach(logs::add);
         return logs;
     }
 
+    /**
+     * Borra todos los logs
+     */
     public void deleteAll() {
         repository.deleteAll();
     }

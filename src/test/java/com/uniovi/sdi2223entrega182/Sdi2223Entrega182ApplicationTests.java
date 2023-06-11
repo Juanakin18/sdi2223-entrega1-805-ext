@@ -195,7 +195,7 @@ class Sdi2223Entrega182ApplicationTests {
         //Contamos el número de filas de usuarios
         List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
                 PO_View.getTimeout());
-        Assertions.assertEquals(10,userList.size() );
+        Assertions.assertEquals(25,userList.size() );
     }
 
     /**
@@ -214,7 +214,7 @@ class Sdi2223Entrega182ApplicationTests {
         //Contamos el número de filas de usuarios
         List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
                 PO_View.getTimeout());
-        Assertions.assertEquals(10,userList.size() );
+        Assertions.assertEquals(25,userList.size() );
         By enlace = By.xpath("/html/body/div[1]/table/tbody/tr[2]/td[4]/input");
         driver.findElement(enlace).click();
 
@@ -223,7 +223,7 @@ class Sdi2223Entrega182ApplicationTests {
         driver.findElement(enlaceBorrar).click();
         userList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
                 PO_View.getTimeout());
-        Assertions.assertEquals(9,userList.size() );
+        Assertions.assertEquals(24,userList.size() );
 
 
     }
@@ -243,14 +243,14 @@ class Sdi2223Entrega182ApplicationTests {
         //Contamos el número de filas de usuarios
         List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
                 PO_View.getTimeout());
-        Assertions.assertEquals(9,userList.size() );
+        Assertions.assertEquals(24,userList.size() );
         By enlace = By.xpath("/html/body/div[1]/table/tbody/tr[6]/td[4]/input");
         driver.findElement(enlace).click();
         By enlaceBorrar = By.xpath("//*[@id=\"deleteAll\"]");
         driver.findElement(enlaceBorrar).click();
         userList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
                 PO_View.getTimeout());
-        Assertions.assertEquals(8,userList.size() );
+        Assertions.assertEquals(23,userList.size() );
     }
     /**
      *  Ir a la lista de usuarios, borrar 3 usuarios, comprobar que la lista se actualiza y dichos
@@ -268,7 +268,7 @@ class Sdi2223Entrega182ApplicationTests {
         //Contamos el número de filas de usuarios
         List<WebElement> userList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
                 PO_View.getTimeout());
-        Assertions.assertEquals(8,userList.size() );
+        Assertions.assertEquals(23,userList.size() );
 
         By enlace2 = By.xpath("/html/body/div[1]/table/tbody/tr[2]/td[4]/input");
         driver.findElement(enlace2).click();
@@ -278,7 +278,7 @@ class Sdi2223Entrega182ApplicationTests {
         driver.findElement(enlaceBorrar).click();
         userList = SeleniumUtils.waitLoadElementsBy(driver, "free", "//tbody/tr",
                 PO_View.getTimeout());
-        Assertions.assertEquals(6,userList.size() );
+        Assertions.assertEquals(21,userList.size() );
     }
     /**
      *  Añadir oferta con datos validos
